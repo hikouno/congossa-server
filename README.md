@@ -42,7 +42,7 @@ Aller donc dans la conf de apache et ajouter la clause ci dessous :
 
     </Directory>
 
-Je l'ai ajouté moi dans le fichier /etc/apache2/mods-available/php7.0.conf (il y a peut etre moyen
+Je l'ai ajouté moi dans le fichier (je suis sous linux) `/etc/apache2/mods-available/php7.0.conf` (il y a peut etre moyen
 de faire plus propre, enfin c'est pas dégueu non plus).
 
 Et ça interprétera tous les fichiers en php dans votre serveur congossa (seulement).
