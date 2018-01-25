@@ -71,18 +71,19 @@ Et du coup dans ionic pour configurer ce proxy il faut rajouter quelques lignes
 au `ionic.config.json` à la racine du projet ionic congossa.
 
 Par exemple le mien à cette tête :
-    {
-      "name": "congossa",
-      "app_id": "",
-      "type": "ionic-angular",
-      "proxies": [{
-        "path": "/api",
-        "proxyUrl": "http://localhost:8111"
-      }],
-      "integrations": {
-        "cordova": {}
-      }
-    }
+
+        {
+          "name": "congossa",
+          "app_id": "",
+          "type": "ionic-angular",
+          "proxies": [{
+            "path": "/api",
+            "proxyUrl": "http://localhost:8111"
+          }],
+          "integrations": {
+            "cordova": {}
+          }
+        }
 
 Ensuite le serveur sera visible depuis l'application.
 (À suivre méthode codée pour faire des requêtes depuis l'apppli en Angular 2).
