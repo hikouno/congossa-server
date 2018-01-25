@@ -34,7 +34,7 @@ de tous les fichiers dans notre dossier d'api (par défaut seulement les .php et
 Aller donc dans la conf de apache et ajouter la clause ci dessous :
 
     # Congossa edit, interpret files without extension (for "generic" API..)
-    <Directory `chemin vers la racine de votre serveur congossa-server`>
+    <Directory chemin/vers/la/racine/de/votre/serveur/congossa-server>
 
         <FilesMatch ".+">
             SetHandler application/x-httpd-php
