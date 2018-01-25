@@ -70,7 +70,7 @@ https://juristr.com/blog/2016/11/configure-proxy-api-angular-cli/
 Et du coup dans ionic pour configurer ce proxy il faut rajouter quelques lignes
 au `ionic.config.json` à la racine du projet ionic congossa.
 
-Par exemple le mien à cette tête :
+Par exemple le mien a cette tête :
 
         {
           "name": "congossa",
