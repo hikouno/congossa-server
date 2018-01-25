@@ -25,6 +25,30 @@ nom des pages ; parametres, valeurs de retour..
 Pour l'instant pour tester une seule page d'API hello vous renvoie une
 string statique au format JSON.
 
+**Attention :** Pour des raisons de généricité on veut que nos pages d'api se finissent
+sans extension (en particulier et par exemple on ne veut pas appeler ajouterMembre.php mais 
+ajouterMembre pour des raisons de transparence par rapport au langage d'implémentation).
+Il faut donc changer un petit peu la configuration de Apache pour lui dire d'interpréter le PHP
+de tous les fichiers dans notre dossier d'api (par défaut seulement les .php et quelques autres le sont).
+
+Aller donc dans la conf de apache et ajouter la clause ci dessous :
+
+    # Congossa edit, interpret files without extension (for "generic" API..)
+    <Directory `chemin vers la racine de votre serveur congossa-server`>
+
+        <FilesMatch ".+">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+
+    </Directory>
+
+Je l'ai ajouté moi dans le fichier /etc/apache2/mods-available/php7.0.conf (il y a peut etre moyen
+de faire plus propre, enfin c'est pas dégueu non plus).
+
+Et ça interprétera tous les fichiers en php dans votre serveur congossa (seulement).
+
+# Test installation
+
 Si vous arrivez à avoir votre string au format JSON dans votre navigateur en
 tapant http://localhost:8111/hello c'est bon pour l'installation du coup.
 
