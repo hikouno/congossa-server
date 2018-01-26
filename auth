@@ -21,9 +21,13 @@ function do_auth()
         
         // [ INSERER VERIFICATION DE L'IDENTITÉ DANS LA BASE DE DONNÉES ICI ]
         // Si pas ok, reject_auth()
+        
+        //Debug
+        echo json_encode(array('user' => $username, 'pass' => $pass_token));
     }
 }
 
-//Debug echo
-echo json_encode(array('user' => $username, 'pass' => $pass_token));
+//Debug
+do_auth();
+
 ?>
