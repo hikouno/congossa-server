@@ -15,7 +15,7 @@ function do_auth()
     if (!isset($_SERVER['PHP_AUTH_USER'])) {
         reject_auth();
     } else {
-        $username = mysql_real_escape_string($_SERVER['PHP_AUTH_USER']); //username
+        $username = $_SERVER['PHP_AUTH_USER']; //username
         $pass_token = $_SERVER['PHP_AUTH_PW']; //hashed password
         
         
