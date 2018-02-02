@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Offre(models.Model):
-	metieR = models.CharField(max_length=200)
+	metier = models.CharField(max_length=200)
 	typeContrat = models.CharField(max_length=200)
 	localisation = models.CharField(max_length=200)
 	competenceRequise = models.CharField(max_length=200)
