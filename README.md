@@ -87,3 +87,27 @@ Par exemple le mien a cette tête :
 
 Ensuite le serveur sera visible depuis l'application.
 (À suivre méthode codée pour faire des requêtes depuis l'apppli en Angular 2).
+
+#Django
+
+Pour lancer django depuis congossa-server:
+1) installer django + python 
+2) cd congossa
+3) python manage.py runserver
+4) ouvrir son navigateur favori a http://localhost:8000/$nomDunePage$
+
+Pendant l implementation :
+Dans ton folder
+- modifier urls.py pour le routage des requetes
+- modifier views.py pour l'exectuion des fonctions
+- modifier models.py pour ajouter des tables dans la BDD
+
+dans le folder congossa:
+- dans urls.py ajouter dans urlpatterns :path('$nomFolder$', include('$nomFloder$.urls')),
+Si t'ajoute des trucs dans la BDD
+- dans settings.py ajouter dans installed apps '$nomFolder$.apps.$nomFolder$Config'
+
+Apres l implementation :
+1) Si modification sur la BDD: python manage.py makemigrations $nomFolder$
+2) python manage.py migrate
+3) python manage.py runserver
