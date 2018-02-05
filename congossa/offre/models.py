@@ -1,5 +1,6 @@
+#OFFRE
 from django.db import models
-
+from utilisateur.models import Utilisateur
 
 class Offre(models.Model):
 	metier = models.CharField(max_length=200)
@@ -10,7 +11,7 @@ class Offre(models.Model):
 	dateDebut =  models.DateTimeField('dateDebut')
 	dureeContrat = models.IntegerField(default=0)
 	description = models.CharField(max_length=400) # Plus long au cas ou
-	# recruteur = useurEmployeur
+	recruteur = Utilisateur
 	# Id genere automatiquement
 
 class Demande(models.Model):
@@ -22,5 +23,5 @@ class Demande(models.Model):
 	dateDebut =  models.DateTimeField('dateDebut')
 	dureeDisponibilite = models.CharField(max_length=200) # pas sur 
 	description = models.CharField(max_length=400) # Plus long au cas ou
-	# demandeur = useurDemandeur
+	demandeur = Utilisateur
 	# Id genere automatiquement

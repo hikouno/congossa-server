@@ -93,7 +93,6 @@ Ensuite le serveur sera visible depuis l'application.
 Pour lancer django depuis congossa-server:
 1) installer django + python 
 2) cd congossa
-3) 
 3) python manage.py runserver
 4) ouvrir son navigateur favori a http://localhost:8000/$nomDunePage$
 
