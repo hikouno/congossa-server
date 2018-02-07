@@ -3,12 +3,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Utilisateur(User):
-	dateDeNaissance = models.CharField(max_length=200,null=True)
-	localisation = models.CharField(max_length=200,null=True)
-	competencePossede = models.CharField(max_length=200,null=True)
-	formationPossede = models.CharField(max_length=200,null=True)
-	diplomePossede =models.CharField(max_length=200,null=True)
-	description = models.CharField(max_length=400,null=True) # Plus long au cas ou
+	dateDeNaissance = models.CharField(max_length=200,default='null')
+	localisation = models.CharField(max_length=200,default='null')
+	competencePossede = models.CharField(max_length=200,default='null')
+	formationPossede = models.CharField(max_length=200,default='null')
+	diplomePossede =models.CharField(max_length=200,default='null')
+	description = models.CharField(max_length=400,default='null') # Plus long au cas ou
 	# Id genere automatiquement
 	# Champs genere par heritage d user
 	# login = String (Obligatoire)
@@ -23,3 +23,20 @@ class Utilisateur(User):
 	# actif = Boolean (True par default)
 	# permissions = ? 
 	# Group = ? (Vide par default)
+	#########################################################
+	# Un constructeur
+	@classmethod
+	def create (cls, login, password, dateInscription,nom,prenom,email,dateDeNaissance,localisation,competencePossede,formationPossede,diplomePossede,description):
+		utilisateur=cls(login=login\
+			,password=password\
+			,dateInscription=dateInscription\
+			,nom=nom\
+			,prenom=prenom\
+			,email=email\
+			,dateDeNaissance=dateDeNaissance\
+			,localisation=localisation\
+			,competencePossede=competencePossede\
+			,formationPossede=formationPossede\
+			,diplomePossede=diplomePossede\
+			,description=description)
+		return utilisateur

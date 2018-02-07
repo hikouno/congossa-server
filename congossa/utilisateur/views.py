@@ -12,6 +12,7 @@ def voirProfil(request, nom):
 def login(request):
     return HttpResponse("You are in utilisateur")
 def register(request):
-    return HttpResponse("You are in utilisateur")
+	Utilisateur.create
+    return HttpResponse("Profil de %s cree" % login)
 def index(request):
     return HttpResponse("You are in utilisateur")
