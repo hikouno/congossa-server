@@ -8,13 +8,13 @@ from .models import Offre, Demande
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
 def ajoutOffre(request, nom):
-    return HttpResponse("You want to ajouter Offre as %s." % nom)
+    return HttpResponse("You want to ajouter Offre as %s." % metier)
 
 def ajoutDemande(request, nom):
-	return HttpResponse("You want to ajouter demande as %s." % nom)
+	return HttpResponse("You want to ajouter demande as %s." % metier)
 	# renvoie la description de la premiere annonce dont la String metier est egale a la string $nom
 def voirAnnonce(request, nom):
-	return HttpResponse("Une annonce pour vous:  %s." % get_object_or_404(Offre,metier = nom).description)
+	return HttpResponse("Une annonce pour vous:  %s." % (get_object_or_404(Offre,metier = nom).description+" propose par "+ get_object_or_404(Offre,metier = nom).recruteur.prenom))
 	
 def index(request):
     return HttpResponse("You are in offre")

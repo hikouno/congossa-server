@@ -9,6 +9,9 @@ from .models import Utilisateur
 
 def voirProfil(request, nom):
     return HttpResponse("You want to voir profil %s." % nom)
-	
+def login(request):
+    return HttpResponse("You are in utilisateur")
+def register(request):
+    return HttpResponse("You are in utilisateur")
 def index(request):
     return HttpResponse("You are in utilisateur")
