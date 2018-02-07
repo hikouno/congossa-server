@@ -1,5 +1,6 @@
 #UTILISATEUR
 from django.db import models
+import datetime
 from django.contrib.auth.models import User
 
 class Utilisateur(User):
@@ -8,10 +9,10 @@ class Utilisateur(User):
 	competencePossede = models.CharField(max_length=200,default='null')
 	formationPossede = models.CharField(max_length=200,default='null')
 	diplomePossede =models.CharField(max_length=200,default='null')
-	description = models.CharField(max_length=400,default='null') # Plus long au cas ou
+	description = models.CharField(max_length=200,default='null') # Plus long au cas ou
 	# Id genere automatiquement
 	# Champs genere par heritage d user
-	# login = String (Obligatoire)
+	# username = username (Obligatoire)
 	# password = String (Obligatoire)
 	# lastLogin = Date
 	# dateInscription = Date
@@ -26,14 +27,15 @@ class Utilisateur(User):
 	#########################################################
 	# Un constructeur
 	@classmethod
-	def create (cls, login, password, dateInscription,nom,prenom,email,dateDeNaissance,localisation,competencePossede,formationPossede,diplomePossede,description):
-		utilisateur=cls(login=login\
+	def create (cls, username, password,nom,prenom,email,dateDeNaissance,localisation,competencePossede,formationPossede,diplomePossede,description):
+		utilisateur=cls(username=username\
 			,password=password\
-			,dateInscription=dateInscription\
-			,nom=nom\
-			,prenom=prenom\
+			,date_joined=datetime.datetime.now()\
+			,last_name=nom\
+			,first_name=prenom\
 			,email=email\
 			,dateDeNaissance=dateDeNaissance\
+			,last_login=datetime.datetime.now()\
 			,localisation=localisation\
 			,competencePossede=competencePossede\
 			,formationPossede=formationPossede\
