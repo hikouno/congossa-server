@@ -1,14 +1,14 @@
 #UTILISATEUR
 from django.urls import path
 from . import views
-from utilisateur.models import Utilisateur
 
 
 urlpatterns = [
 	# Routage vers les differentes fction
     path('', views.index, name='index'),
 	# Slug pour les string jsp pourquoi pas String 
-    path('<int:idUser>/voirProfil/<slug:nom>', views.voirProfil, name='voirProfil'),
+    path('voirProfil/<slug:nom>', views.voirProfil, name='voirProfil'),
+    # Mettre le mdp dans un post serait mieux mais pour tester les get c est pas mal
     path('login/'\
         + '<slug:nomDeCompte>/'\
         + '<slug:motDePasse>',views.login, name='login'),
@@ -24,4 +24,16 @@ urlpatterns = [
     	+ '<slug:formationPossede>/'\
     	+ '<slug:diplomePossede>/'\
     	+ '<slug:description>', views.register, name='register'),
+    path('consulterSonProfil/<slug:nomDeCompte>',views.consulterSonProfil,name='consulterSonProfil'),
+    path ('editerSonProfil/'\
+        + '<slug:login>/'\
+        + '<slug:nom>/'\
+        + '<slug:prenom>/'\
+        + '<slug:email>/'\
+        + '<slug:dateDeNaissance>/'\
+        + '<slug:localisation>/'\
+        + '<slug:competencePossede>/'\
+        + '<slug:formationPossede>/'\
+        + '<slug:diplomePossede>/'
+        + '<slug:description>',views.editerSonProfil,name='editerSonProfil')
 ]
