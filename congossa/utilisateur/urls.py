@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
 	# Routage vers les differentes fction
     path('', views.index, name='index'),
-	# Slug pour les string jsp pourquoi pas String 
+	# Slug pour les string jsp pourquoi pas String
     path('voirProfil/<slug:nom>', views.voirProfil, name='voirProfil'),
     # Mettre le mdp dans un post serait mieux mais pour tester les get c est pas mal
     path('login/'\
@@ -23,6 +23,9 @@ urlpatterns = [
     	+ '<slug:competencePossede>/'\
     	+ '<slug:formationPossede>/'\
     	+ '<slug:diplomePossede>/'\
+        + '<slug:avatar>/'\
+        + '<slug:experiencePossede>/'\
+        + '<slug:qualite>/'\
     	+ '<slug:description>', views.register, name='register'),
     path('consulterSonProfil/<slug:nomDeCompte>',views.consulterSonProfil,name='consulterSonProfil'),
     path('editerSonProfil/'\
@@ -35,6 +38,9 @@ urlpatterns = [
         + '<slug:competencePossede>/'\
         + '<slug:formationPossede>/'\
         + '<slug:diplomePossede>/'\
+        + '<slug:avatar>/'\
+        + '<slug:experiencePossede>/'\
+        + '<slug:qualite>/'\
         + '<slug:description>/',views.editerSonProfil,name='editerSonProfil'),
     path('changerMdp/'\
         + '<slug:login>/'\

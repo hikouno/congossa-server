@@ -6,11 +6,15 @@ from django.contrib.auth.models import User
 class Utilisateur(User):
 	dateDeNaissance = models.CharField(max_length=200,default='null')
 	localisation = models.CharField(max_length=200,default='null')
+	# Remplace par des objts
 	competencePossede = models.CharField(max_length=200,default='null')
 	formationPossede = models.CharField(max_length=200,default='null')
 	diplomePossede =models.CharField(max_length=200,default='null')
 	description = models.CharField(max_length=200,default='null')
 	avatar = models.CharField(max_length=200,default='null')
+	experiencePossede = models.CharField(max_length=200,default='null')
+	qualite = models.CharField(max_length=200,default='null')
+	#listeOffre
 	# Champs genere par heritage d user
 	# username = username (Obligatoire + Sert de clef unique)
 	# password = String (Obligatoire)
@@ -27,7 +31,21 @@ class Utilisateur(User):
 	#########################################################
 	# Un constructeur
 	@classmethod
-	def create (cls, username, password,nom,prenom,email,dateDeNaissance,localisation,competencePossede,formationPossede,diplomePossede,description):
+	def create (cls\
+		, username\
+		, password\
+		, nom\
+		, prenom\
+		, email\
+		, dateDeNaissance\
+		, localisation\
+		, competencePossede\
+		, formationPossede\
+		, diplomePossede\
+		, avatar\
+		, experiencePossede\
+		, qualite\
+		,description):
 		utilisateur=cls(username=username\
 			,password=password\
 			,date_joined=datetime.datetime.now()\
@@ -40,5 +58,8 @@ class Utilisateur(User):
 			,competencePossede=competencePossede\
 			,formationPossede=formationPossede\
 			,diplomePossede=diplomePossede\
+			,avatar=avatar
+			,experiencePossede=experiencePossede
+			,qualite=qualite
 			,description=description)
 		return utilisateur
