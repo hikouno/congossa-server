@@ -25,7 +25,7 @@ urlpatterns = [
     	+ '<slug:diplomePossede>/'\
     	+ '<slug:description>', views.register, name='register'),
     path('consulterSonProfil/<slug:nomDeCompte>',views.consulterSonProfil,name='consulterSonProfil'),
-    path ('editerSonProfil/'\
+    path('editerSonProfil/'\
         + '<slug:login>/'\
         + '<slug:nom>/'\
         + '<slug:prenom>/'\
@@ -34,6 +34,9 @@ urlpatterns = [
         + '<slug:localisation>/'\
         + '<slug:competencePossede>/'\
         + '<slug:formationPossede>/'\
-        + '<slug:diplomePossede>/'
-        + '<slug:description>',views.editerSonProfil,name='editerSonProfil')
+        + '<slug:diplomePossede>/'\
+        + '<slug:description>/',views.editerSonProfil,name='editerSonProfil'),
+    path('changerMdp/'\
+        + '<slug:login>/'\
+        + '<slug:nouveauMotDePasse>',views.changerMdp,name='changerMdp'),
 ]

@@ -9,10 +9,10 @@ class Utilisateur(User):
 	competencePossede = models.CharField(max_length=200,default='null')
 	formationPossede = models.CharField(max_length=200,default='null')
 	diplomePossede =models.CharField(max_length=200,default='null')
-	description = models.CharField(max_length=200,default='null') # Plus long au cas ou
-	# Id genere automatiquement
+	description = models.CharField(max_length=200,default='null')
+	avatar = models.CharField(max_length=200,default='null')
 	# Champs genere par heritage d user
-	# username = username (Obligatoire)
+	# username = username (Obligatoire + Sert de clef unique)
 	# password = String (Obligatoire)
 	# lastLogin = Date
 	# dateInscription = Date
