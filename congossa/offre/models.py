@@ -2,6 +2,7 @@
 from django.db import models
 from utilisateur.models import Utilisateur
 
+
 class Offre(models.Model):
 	titre= models.CharField(max_length=200)
 	metier = models.CharField(max_length=200)

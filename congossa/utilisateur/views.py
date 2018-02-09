@@ -26,11 +26,7 @@ def register(request\
 	, email\
 	, dateDeNaissance\
 	, localisation\
-	, competencePossede\
-	, formationPossede\
-	, diplomePossede\
 	, avatar\
-	, experiencePossede\
 	, qualite\
 	, description):
 	utilisateur=Utilisateur.create(nomDeCompte\
@@ -40,11 +36,7 @@ def register(request\
 		, email\
 		, dateDeNaissance\
 		, localisation\
-		, competencePossede\
-		, formationPossede\
-		, diplomePossede\
 		, avatar\
-		, experiencePossede\
 		, qualite\
 		, description)
 	utilisateur.set_password(motDePasse)
@@ -59,11 +51,7 @@ def consulterSonProfil(request,nomDeCompte):
 		+ '\n date de naissance ' + user.dateDeNaissance\
 		#+ " derniere connexion "+ user.last_login\
 		+ '\n localisation '+ user.localisation\
-		+ '\n competence possede '+ user.competencePossede\
-		+ '\n formation possede ' + user.formationPossede\
-		+ '\n diplome possede ' + user.diplomePossede\
 		+ '\n avatar '+ user.avatar\
-		+ '\n experience possede ' + user.experiencePossede\
 		+ '\n qualite ' + user.qualite\
 		+ '\n description '+ user.description)
 
@@ -76,11 +64,7 @@ def editerSonProfil(request\
 	, email\
 	, dateDeNaissance\
 	, localisation\
-	, competencePossede\
-	, formationPossede\
-	, diplomePossede\
 	, avatar\
-	, experiencePossede\
 	, qualite\
 	, description):
 	# Du coup si une string est 'null' on change rien
@@ -95,16 +79,8 @@ def editerSonProfil(request\
 		user.dateDeNaissance=dateDeNaissance
 	if localisation != 'null' :
 		user.localisation=localisation
-	if competencePossede != 'null' :
-		user.competencePossede=competencePossede
-	if formationPossede != 'null' :
-		user.formationPossede=formationPossede
-	if diplomePossede != 'null' :
-		user.diplomePossede=diplomePossede
 	if avatar != 'null' :
 		user.avatar=avatar
-	if experiencePossede != 'null' :
-		user.experiencePossede=experiencePossede
 	if qualite != 'null' :
 		user.qualite=qualite
 	if description != 'null' :

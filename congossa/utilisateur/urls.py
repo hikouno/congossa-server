@@ -20,11 +20,7 @@ urlpatterns = [
     	+ '<slug:email>/'\
     	+ '<slug:dateDeNaissance>/'\
     	+ '<slug:localisation>/'\
-    	+ '<slug:competencePossede>/'\
-    	+ '<slug:formationPossede>/'\
-    	+ '<slug:diplomePossede>/'\
         + '<slug:avatar>/'\
-        + '<slug:experiencePossede>/'\
         + '<slug:qualite>/'\
     	+ '<slug:description>', views.register, name='register'),
     path('consulterSonProfil/<slug:nomDeCompte>',views.consulterSonProfil,name='consulterSonProfil'),
@@ -35,11 +31,7 @@ urlpatterns = [
         + '<slug:email>/'\
         + '<slug:dateDeNaissance>/'\
         + '<slug:localisation>/'\
-        + '<slug:competencePossede>/'\
-        + '<slug:formationPossede>/'\
-        + '<slug:diplomePossede>/'\
         + '<slug:avatar>/'\
-        + '<slug:experiencePossede>/'\
         + '<slug:qualite>/'\
         + '<slug:description>/',views.editerSonProfil,name='editerSonProfil'),
     path('changerMdp/'\

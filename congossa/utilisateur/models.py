@@ -2,17 +2,18 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
+from composantProfil.models import cartePresentation
+
 
 class Utilisateur(User):
 	dateDeNaissance = models.CharField(max_length=200,default='null')
 	localisation = models.CharField(max_length=200,default='null')
-	# Remplace par des objts
-	competencePossede = models.CharField(max_length=200,default='null')
-	formationPossede = models.CharField(max_length=200,default='null')
-	diplomePossede =models.CharField(max_length=200,default='null')
+	# A voir pour le delete et le default
+	carteCompetence = models.OneToOneField(cartePresentation\
+		,on_delete=models.CASCADE\
+		,default=cartePresentation.create("Carte de %s" % username))
 	description = models.CharField(max_length=200,default='null')
 	avatar = models.CharField(max_length=200,default='null')
-	experiencePossede = models.CharField(max_length=200,default='null')
 	qualite = models.CharField(max_length=200,default='null')
 	#listeOffre
 	# Champs genere par heritage d user
@@ -39,11 +40,7 @@ class Utilisateur(User):
 		, email\
 		, dateDeNaissance\
 		, localisation\
-		, competencePossede\
-		, formationPossede\
-		, diplomePossede\
 		, avatar\
-		, experiencePossede\
 		, qualite\
 		,description):
 		utilisateur=cls(username=username\
@@ -55,11 +52,7 @@ class Utilisateur(User):
 			,dateDeNaissance=dateDeNaissance\
 			,last_login=datetime.datetime.now()\
 			,localisation=localisation\
-			,competencePossede=competencePossede\
-			,formationPossede=formationPossede\
-			,diplomePossede=diplomePossede\
 			,avatar=avatar
-			,experiencePossede=experiencePossede
 			,qualite=qualite
 			,description=description)
 		return utilisateur
