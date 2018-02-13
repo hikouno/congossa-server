@@ -1,18 +1,18 @@
 from django.db import models
 
 # Create your models here.
-class cartePresentation(models.Model):
-	#Pour le contenu jsp
-	name = models.CharField(max_length=200)
-	#id genere automatiquement
-	@classmethod
-	def create (cls,nom):
-		carte=cls(name=nom)
-		return carte
+#class cartePresentation(models.Model):
+#	#Pour le contenu jsp
+#	name = models.CharField(max_length=200)
+#	#id genere automatiquement
+#	@classmethod
+#	def create (cls,nom):
+#		carte=cls(name=nom)
+#		return carte
 #############################
 class competence(models.Model):
 	contenu = models.CharField(max_length=200)
-	carte=models.ForeignKey(cartePresentation, on_delete=models.CASCADE)
+#	carte=models.ForeignKey(cartePresentation, on_delete=models.CASCADE)
 	#id genere automatiquement
 	@classmethod
 	def create (cls,content):
@@ -21,7 +21,7 @@ class competence(models.Model):
 #############################
 class formation(models.Model):
 	contenu = models.CharField(max_length=200)
-	carte=models.ForeignKey(cartePresentation, on_delete=models.CASCADE)
+#	carte=models.ForeignKey(cartePresentation, on_delete=models.CASCADE)
 	#id genere automatiquement
 	@classmethod
 	def create (cls,content):
@@ -30,7 +30,7 @@ class formation(models.Model):
 #############################
 class diplome(models.Model):
 	contenu = models.CharField(max_length=200)
-	carte=models.ForeignKey(cartePresentation, on_delete=models.CASCADE)
+#	carte=models.ForeignKey(cartePresentation, on_delete=models.CASCADE)
 	#id genere automatiquement
 	@classmethod
 	def create (cls,content):
@@ -39,7 +39,7 @@ class diplome(models.Model):
 #############################
 class experience(models.Model):
 	contenu = models.CharField(max_length=200)
-	carte=models.ForeignKey(cartePresentation, on_delete=models.CASCADE)
+#	carte=models.ForeignKey(cartePresentation, on_delete=models.CASCADE)
 	#id genere automatiquement
 	@classmethod
 	def create (cls,content):
