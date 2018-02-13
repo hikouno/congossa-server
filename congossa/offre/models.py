@@ -12,6 +12,7 @@ class Offre(models.Model):
 	diplomeRequis =models.CharField(max_length=200)
 	dateDebut =  models.CharField(max_length=200)
 	dureeContrat = models.CharField(max_length=200)
+	experienceRequise= models.CharField(max_length=200,default='null')
 	description = models.CharField(max_length=400) # Plus long au cas ou
 	recruteur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
 	# Id genere automatiquement
