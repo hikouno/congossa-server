@@ -55,4 +55,4 @@ class Utilisateur(User):
 			,avatar=avatar
 			,qualite=qualite
 			,description=description)
-	return utilisateur
+		return utilisateur
