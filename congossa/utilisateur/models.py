@@ -2,16 +2,12 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
-from composantProfil.models import cartePresentation
 
 
 class Utilisateur(User):
 	dateDeNaissance = models.CharField(max_length=200,default='null')
 	localisation = models.CharField(max_length=200,default='null')
 	# A voir pour le delete et le default
-	#carteCompetence = models.OneToOneField(cartePresentation\
-	#	,on_delete=models.CASCADE\
-	#	,default=cartePresentation.create("Carte de %s" % username))
 	description = models.CharField(max_length=200,default='null')
 	avatar = models.CharField(max_length=200,default='null')
 	qualite = models.CharField(max_length=200,default='null')
@@ -27,7 +23,7 @@ class Utilisateur(User):
 	# membreDuStaff = Boolean (False par default)
 	# superUser = Boolean (False par default)
 	# actif = Boolean (True par default)
-	# permissions = ? 
+	# permissions = ?
 	# Group = ? (Vide par default)
 	#########################################################
 	# Un constructeur
@@ -55,4 +51,5 @@ class Utilisateur(User):
 			,avatar=avatar
 			,qualite=qualite
 			,description=description)
-	return utilisateur
+		return utilisateur
+
