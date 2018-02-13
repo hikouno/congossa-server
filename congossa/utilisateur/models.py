@@ -27,7 +27,7 @@ class Utilisateur(User):
 	# membreDuStaff = Boolean (False par default)
 	# superUser = Boolean (False par default)
 	# actif = Boolean (True par default)
-	# permissions = ? 
+	# permissions = ?
 	# Group = ? (Vide par default)
 	#########################################################
 	# Un constructeur
@@ -55,4 +55,4 @@ class Utilisateur(User):
 			,avatar=avatar
 			,qualite=qualite
 			,description=description)
-		return utilisateur
+	return utilisateur
