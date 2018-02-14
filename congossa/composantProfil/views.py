@@ -44,5 +44,5 @@ def EditExperience(experience,metier,dateDebut,dateFin):
 	experience.dateDebut=dateDebut
 	experience.dateFin=dateFin
 	experience.save()
-	return HttpResponse("experience %s du %s au %s cree" % metier.intitule dateDebut dateFin)
+	return HttpResponse("experience %s du %s au %s modifie" % metier.intitule dateDebut dateFin)
 ##########################

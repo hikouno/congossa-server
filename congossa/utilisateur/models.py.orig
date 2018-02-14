@@ -2,21 +2,21 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
-from composantProfil.models import NiveauEtude
-from composantProfil.models import Experience
-from composantProfil.models import Qualite
-
 
 
 class Utilisateur(User):
 	dateDeNaissance = models.CharField(max_length=200,default='null')
 	localisation = models.CharField(max_length=200,default='null')
 	# A voir pour le delete et le default
-	avatar = models.CharField(max_length=200,default='null')
-	qualite = models.ManyToManyField(Qualite)
-	niveauEtude=models.ManyToManyField(NiveauEtude)
-	experience = models.ManyToManyField(Experience)
+<<<<<<< HEAD
+	#carteCompetence = models.OneToOneField(cartePresentation\
+	#	,on_delete=models.CASCADE\
+	#	,default=cartePresentation.create("Carte de %s" % username))
+=======
+>>>>>>> ae91173e6850c14288eb2125aa4828c6f3688c03
 	description = models.CharField(max_length=200,default='null')
+	avatar = models.CharField(max_length=200,default='null')
+	qualite = models.CharField(max_length=200,default='null')
 	#listeOffre
 	# Champs genere par heritage d user
 	# username = username (Obligatoire + Sert de clef unique)
@@ -32,20 +32,33 @@ class Utilisateur(User):
 	# permissions = ?
 	# Group = ? (Vide par default)
 	#########################################################
-
 	# Un constructeur
 	@classmethod
-	def create (cls, username, password, nom, prenom, email, dateDeNaissance, localisation, avatar, description):
+	def create (cls\
+		, username\
+		, password\
+		, nom\
+		, prenom\
+		, email\
+		, dateDeNaissance\
+		, localisation\
+		, avatar\
+		, qualite\
+		,description):
 		utilisateur=cls(username=username\
 			,password=password\
 			,date_joined=datetime.datetime.now()\
 			,last_name=nom\
 			,first_name=prenom\
 			,email=email\
-			,last_login=datetime.datetime.now()\
 			,dateDeNaissance=dateDeNaissance\
+			,last_login=datetime.datetime.now()\
 			,localisation=localisation\
-			,avatar=avatar\
+			,avatar=avatar
+			,qualite=qualite
 			,description=description)
+<<<<<<< HEAD
+	return utilisateur
+=======
 		return utilisateur
-
+>>>>>>> ae91173e6850c14288eb2125aa4828c6f3688c03
