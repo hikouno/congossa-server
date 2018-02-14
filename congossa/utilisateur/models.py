@@ -32,20 +32,10 @@ class Utilisateur(User):
 	# permissions = ?
 	# Group = ? (Vide par default)
 	#########################################################
+
 	# Un constructeur
 	@classmethod
-	def create (cls\
-		, username\
-		, password\
-		, nom\
-		, prenom\
-		, email\
-		, dateDeNaissance\
-		, localisation\
-		, avatar\
-		, qualite\
-		, niveauEtude\
-		,description):
+	def create (cls, username, password, nom, prenom, email, dateDeNaissance, localisation, avatar, description):
 		utilisateur=cls(username=username\
 			,password=password\
 			,date_joined=datetime.datetime.now()\
@@ -56,8 +46,6 @@ class Utilisateur(User):
 			,dateDeNaissance=dateDeNaissance\
 			,localisation=localisation\
 			,avatar=avatar\
-			,qualite=qualite\
-			,niveauEtude=niveauEtude\
 			,description=description)
 		return utilisateur
 
