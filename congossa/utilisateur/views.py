@@ -3,14 +3,31 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 from .models import Utilisateur
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
+##
+#  Fonction qui renvoie les données concernant l'utilisateur
+
 def voirProfil(request, nom):
-	user=get_object_or_404(Utilisateur,first_name = nom)
-	return HttpResponse("You want to voir profil de %s" % (user.username))
+	user = get_object_or_404(Utilisateur,first_name = nom) # récupération de l'objet user
+	data =  {
+	    'username': user.username,
+	    'nom': user.nom,
+	    'prenom': user.prenom,
+	    'email': user.email,
+	    'dateDeNaissance': user.dateDeNaissance,
+	    'avatar': user.avatar,
+	    'qualite': user.qualite,
+	    'niveauEtude': user.niveauEtude,
+	    'experience': user.experience,
+ 	    'description': user.description,
+	} # création du ficier Json
+
+	return  JsonResponse(data)
 
 
 #######################################################
