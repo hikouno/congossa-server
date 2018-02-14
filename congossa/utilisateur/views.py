@@ -43,7 +43,7 @@ def login(request):
 ##
 #  S'enregistrer
 
-def register(request)
+def register(request):
 	utilisateur.set_password(motDePasse)
 	utilisateur.save()
 	return HttpResponse("Profil de %s cree" % nomDeCompte)
@@ -100,7 +100,7 @@ def changerMdp(request):
 	return HttpResponse('mot de passe de %s modifie' % user.username)
 
 ##
-#  
+#
 
 def index(request):
     return HttpResponse('You are in utilisateur')
