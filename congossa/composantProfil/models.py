@@ -21,6 +21,7 @@ class Competence(models.Model):
 #############################
 #bac +
 class NiveauEtude(models.Model):
+	#Ou avec la date
 	duree = models.CharField(max_length=200)
 	domaine = models.CharField(max_length=200)
 	#id genere automatiquement
