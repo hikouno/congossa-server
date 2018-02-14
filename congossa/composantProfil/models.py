@@ -30,15 +30,23 @@ class NiveauEtude(models.Model):
 		return niveauEtude
 #############################
 class Metier(models.Model):
-	intitule:models.CharField(max_length=200)
+	intitule=models.CharField(max_length=200)
+	@classmethod
+	def create (cls,intitule):
+		metier=cls(intitule=intitule)
+		return metier
 	#id genere automatiquement
 #############################
 class Qualite(models.Model):
 	contenu=models.CharField(max_length=200)
+	@classmethod
+	def create (cls,contenu):
+		qualite=cls(contenu=contenu)
+		return qualite
 	#id genere automatiquement
 	#useless ou nb année
 class Experience(models.Model):
-	metierPratique= models.ForeignKey(Qualite, on_delete=models.CASCADE, null=True)
+	metierPratique= models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
 	dateDebut=datetime
 	dateFin=datetime
 	#id genere automatiquement
