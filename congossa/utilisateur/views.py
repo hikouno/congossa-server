@@ -9,10 +9,12 @@ from .models import Utilisateur
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
+
+
 ##
 #  Fonction qui renvoie les données concernant l'utilisateur
 
-def voirProfil(request, nom):
+def voirProfil(request):
 	user = get_object_or_404(Utilisateur,first_name = nom) # récupération de l'objet user
 	data =  {
 	    'username': user.username,
@@ -27,39 +29,29 @@ def voirProfil(request, nom):
  	    'description': user.description,
 	} # création du ficier Json
 
-	return  JsonResponse(data)
+	return JsonResponse(data)
 
 
-#######################################################
-def login(request,nomDeCompte,motDePasse):
-	user=authenticate(username=nomDeCompte, password=motDePasse)
-	return HttpResponse("Hello %s" % user.username)
-#######################################################
-def register(request\
-	, nomDeCompte\
-	, motDePasse\
-	, nom\
-	, prenom\
-	, email\
-	, dateDeNaissance\
-	, localisation\
-	, avatar\
-	, qualite\
-	, description):
-	utilisateur=Utilisateur.create(nomDeCompte\
-		, motDePasse\
-		, nom\
-		, prenom\
-		, email\
-		, dateDeNaissance\
-		, localisation\
-		, avatar\
-		, qualite\
-		, description)
+##
+#  Fonction pour se connecter
+
+def login(request):
+	user = authenticate(username=nomDeCompte, password=motDePasse)
+
+	return HttpResponse()
+
+##
+#  S'enregistrer
+
+def register(request)
 	utilisateur.set_password(motDePasse)
 	utilisateur.save()
 	return HttpResponse("Profil de %s cree" % nomDeCompte)
-def consulterSonProfil(request,nomDeCompte):
+
+##
+#  Fonction pour consulter un profil
+
+def consulterSonProfil(request):
 	user=get_object_or_404(Utilisateur,username = nomDeCompte)
 	return HttpResponse('Here is your profil %s' % (user.username)\
 		+ '\n nom '+ user.last_name\
@@ -73,17 +65,10 @@ def consulterSonProfil(request,nomDeCompte):
 		+ '\n description '+ user.description)
 
 
-# On verra apres pour le login et mdp
-def editerSonProfil(request\
-	, login\
-	, nom\
-	, prenom\
-	, email\
-	, dateDeNaissance\
-	, localisation\
-	, avatar\
-	, qualite\
-	, description):
+##
+#  Fonction pour éditer son profil
+
+def editerSonProfil(request):
 	# Du coup si une string est 'null' on change rien
 	user=get_object_or_404(Utilisateur,username = login)
 	if nom != 'null' :
@@ -104,13 +89,18 @@ def editerSonProfil(request\
 		user.description=description
 	user.save()
 	return HttpResponse('profil de %s edite' % user.username)
-def changerMdp(request\
-	, login\
-	, nouveauMotDePasse):
+
+##
+#   Changer de mot de passe
+
+def changerMdp(request):
 	user=get_object_or_404(Utilisateur,username = login)
 	user.set_password(nouveauMotDePasse)
 	user.save()
 	return HttpResponse('mot de passe de %s modifie' % user.username)
+
+##
+#  
 
 def index(request):
     return HttpResponse('You are in utilisateur')
