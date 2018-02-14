@@ -2,7 +2,7 @@ from django.db import models
 
 #############################
 #useless
-class competence(models.Model):
+class Competence(models.Model):
 	contenu = models.CharField(max_length=200)
 	#id genere automatiquement
 	@classmethod
@@ -11,25 +11,29 @@ class competence(models.Model):
 		return competence
 #############################
 #useless
-class formation(models.Model):
-	contenu = models.CharField(max_length=200)
+#class formation(models.Model):
+#	contenu = models.CharField(max_length=200)
 #id genere automatiquement
-	@classmethod
-	def create (cls,content):
-		formation=cls(contenu=nom)
-		return formation
+##	@classmethod
+#	def create (cls,content):
+#		formation=cls(contenu=nom)
+#		return formation
 #############################
 #bac +
-class diplome(models.Model):
-	contenu = models.CharField(max_length=200)
+class NiveauEtude(models.Model):
+	duree = models.CharField(max_length=200)
+	domaine = models.CharField(max_length=200)
 	#id genere automatiquement
 	@classmethod
-	def create (cls,content):
-		diplome=cls(contenu=nom)
-		return diplome
+	def create (cls,duree,domaine):
+		niveauEtude=cls(duree=duree,domaine=domaine)
+		return niveauEtude
 #############################
+class Metier(models.Model):
+	intitule:models.CharField(max_length=200)
+	#id genere automatiquement
 #useless ou nb année
-class experience(models.Model):
+class Experience(models.Model):
 	contenu = models.CharField(max_length=200)
 	#id genere automatiquement
 	@classmethod
@@ -37,4 +41,6 @@ class experience(models.Model):
 		experience=cls(contenu=nom)
 		return experience
 #############################
- #qualite?
+class Qualite(models.Model):
+	contenu=models.CharField(max_length=200)
+	#id genere automatiquement
