@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 
 from .models import Utilisateur
+from .models import Competence
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
@@ -101,6 +102,9 @@ def changerMdp(request):
 
 ##
 #  
+def ajouterCompetence(request):
+	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user.add(Competence.create(request.competenceAjoutee))
 
 def index(request):
     return HttpResponse('You are in utilisateur')
