@@ -7,6 +7,13 @@ from django.http import JsonResponse
 
 from .models import Utilisateur
 from .models import Competence
+from .models import NiveauEtude
+from .models import Qualite
+
+from composantProfil.views import EditCompetence
+from composantProfil.views import EditNiveauEtude
+from composantProfil.views import EditQualite
+
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
@@ -101,12 +108,61 @@ def changerMdp(request):
 	return HttpResponse('mot de passe de %s modifie' % user.username)
 
 ##
-#  
+# GESTION COMPOSANT PROFIL
+###########################################
 def ajouterCompetence(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
-	user.add(Competence.create(request.competenceAjoutee))
+	user.add(Competence.create(request.POST.competenceAjoutee))
+######
+def removeCompetence(request):
+	competence= get_objet_or_404(Competence, id=request.POST.id)
+	competence.delete()
+#######
+def editeCompetence(request):
+	competence= get_objet_or_404(Competence, id=request.POST.id)
+	EditCompetence(competence,request.POST.newContent)
 
-#
+###########################################
 
+def ajouterNiveauEtude(request):
+	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user.add(NiveauEtude.create(request.POST.duree,request.POST.domaine))
+########
+def removeNiveauEtude(request):
+	niveauEtude = get_objet_or_404(NiveauEtude, id=request.POST.id)
+	niveauEtude.delete()
+########
+def editeNiveauEtude(request):
+	niveauEtude= get_objet_or_404(NiveauEtude, id=request.POST.id)
+	EditNiveauEtude(competence,request.POST.newDuree,request.POST.newDomaine)
+
+###########################################
+
+def ajouterQualite(request):
+	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user.add(Qualite.create(request.POST.qualiteAjoutee))
+######
+def removeQualite(request):
+	qualite= get_objet_or_404(Qualite, id=request.POST.id)
+	qualite.delete()
+#######
+def editeQualite(request):
+	qualite= get_objet_or_404(Qualite, id=request.POST.id)
+	EditCompetence(qualite,request.POST.newContent)
+
+###########################################
+
+def ajouterExperience(request):
+	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user.add(Experience.create(request.POST.idMetier,request.POST.dateDebut,request.POST.dateFin))
+########
+def removeExperience(request):
+	experience = get_objet_or_404(Experience, id=request.POST.id)
+	experience.delete()
+########
+def editeExperience(request):
+	experience= get_objet_or_404(Experience, id=request.POST.id)
+	EditNiveauEtude(competence,request.POST.idMetier,request.POST.dateDebut,request.POST.dateFin)
+###########################################
 def index(request):
     return HttpResponse('You are in utilisateur')

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from composantProfil.models import NiveauEtude
 from composantProfil.models import Experience
 from composantProfil.models import Qualite
+from composantProfil.models import Competence
 
 
 
@@ -13,6 +14,7 @@ class Utilisateur(User):
 	localisation = models.CharField(max_length=200,default='null')
 	# A voir pour le delete et le default
 	avatar = models.CharField(max_length=200,default='null')
+	competence = models.ManyToManyField(Competence)
 	qualite = models.ManyToManyField(Qualite)
 	niveauEtude=models.ManyToManyField(NiveauEtude)
 	experience = models.ManyToManyField(Experience)

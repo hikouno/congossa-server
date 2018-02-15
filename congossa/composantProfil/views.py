@@ -1,6 +1,5 @@
 #COMPOSANT OFFRE
 from django.shortcuts import render
-
 # Create your views here.
 ##########################
 def CreateCompetence(contenu):
@@ -16,7 +15,7 @@ def EditCompetence(competence,newContent):
 def CreateNiveauEtude(duree,domaine):
 	niveauEtude=NiveauEtude.Create(duree,domaine)
 	niveauEtude.save()
-	return HttpResponse("Niveau d'etude  %s %s cree" % duree domaine)
+	return HttpResponse("Niveau d'etude  %s %s cree" % duree, domaine)
 ##########################
 def EditNiveauEtude(niveauEtude,duree,domaine):
 	niveauEtude.duree=duree
@@ -37,12 +36,12 @@ def CreateQualite(contenu):
 def CreateExperience(metier,dateDebut,dateFin):
 	experience=Experience.Create(metier,dateDebut,dateFin)
 	experience.save()
-	return HttpResponse("experience %s du %s au %s cree" % metier.intitule dateDebut dateFin)
+	return HttpResponse("experience %s du %s au %s cree" % metier.intitule, dateDebut, dateFin)
 ##########################
 def EditExperience(experience,metier,dateDebut,dateFin):
 	experience.metier=metier
 	experience.dateDebut=dateDebut
 	experience.dateFin=dateFin
 	experience.save()
-	return HttpResponse("experience %s du %s au %s modifie" % metier.intitule dateDebut dateFin)
+	return HttpResponse("experience %s du %s au %s modifie" % metier.intitule, dateDebut, dateFin)
 ##########################
