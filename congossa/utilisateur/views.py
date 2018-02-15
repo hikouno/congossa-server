@@ -106,5 +106,7 @@ def ajouterCompetence(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
 	user.add(Competence.create(request.competenceAjoutee))
 
+#
+
 def index(request):
     return HttpResponse('You are in utilisateur')
