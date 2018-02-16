@@ -146,7 +146,7 @@ def ajouterExperience(request):
 def editerMonProfil(request):
 	user=get_object_or_404(Utilisateur, username= request.POST.username)
 	#Competence
-	for i in range (1,request.POST.nbCompetence)
+	for i in range(1,request.POST.nbCompetence):
 		if request.POST.actionCompetence.i="add"
 			ajouterCompetence(request.POST.competence.i)
 		elif request.POST.actionCompetence.i="edit"
