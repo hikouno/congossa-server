@@ -12,7 +12,7 @@ from .models import Qualite
 
 from composantProfil.views import EditCompetence
 from composantProfil.views import EditNiveauEtude
-from composantProfil.views import EditQualite
+#from composantProfil.views import EditQualite
 
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
@@ -146,9 +146,9 @@ def removeQualite(request):
 	qualite= get_objet_or_404(Qualite, id=request.POST.id)
 	qualite.delete()
 #######
-def editeQualite(request):
-	qualite= get_objet_or_404(Qualite, id=request.POST.id)
-	EditCompetence(qualite,request.POST.newContent)
+#def editeQualite(request):
+	#qualite= get_objet_or_404(Qualite, id=request.POST.id)
+	#EditCompetence(qualite,request.POST.newContent)
 
 ###########################################
 
