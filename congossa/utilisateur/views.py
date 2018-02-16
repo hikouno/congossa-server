@@ -146,20 +146,20 @@ def ajouterExperience(request):
 def editerMonProfil(request):
 	user=get_object_or_404(Utilisateur, username= request.POST.username)
 	#Competence
-	for i in range (1,request.POST.nbCompetence)
-		if request.POST.actionCompetence.i="add"
-			ajouterCompetence(request.POST.competence.i)
-		elif request.POST.actionCompetence.i="edit"
-			editCompetence(request.POST.idCompetence.i,request.POST.competence.i)
-		elif request.POST.actionCompetence.i="remove"
-			removeCompetence(request.POST.idCompetence.i)
+	for i in range(1,request.POST.nbCompetence):
+		if request.POST.actionCompetence[i] == "add":
+			ajouterCompetence(request.POST.competence[i])
+		elif request.POST.actionCompetence[i]=="edit":
+			editCompetence(request.POST.idCompetence[i],request.POST.competence[i])
+		elif request.POST.actionCompetence[i]=="remove":
+			removeCompetence(request.POST.idCompetence[i])
 	#Niveau d etude
-	for i in range (1,request.POST.nbNiveauEtude)
-		if request.POST.actionNiveauEtude.i="add"
-			ajouterNiveauEtude(request.POST.dureeNiveauEtude.i,request.POST.domaineNiveauEtude.i)
-		elif request.POST.actionNiveauEtude.i="edit"
-			editNiveauEtude(request.POST.idNiveauEtude.i,request.POST.dureeNiveauEtude.i,request.POST.domaineNiveauEtude.i)
-		elif request.POST.actionNiveauEtude.i="remove"
-			removeNiveauEtude(request.POST.idNiveauEtude.i)
+	for i in range(1,request.POST.nbNiveauEtude):
+		if request.POST.actionNiveauEtude[i]=="add":
+			ajouterNiveauEtude(request.POST.dureeNiveauEtude[i],request.POST.domaineNiveauEtude[i])
+		elif request.POST.actionNiveauEtude[i]=="edit":
+			editNiveauEtude(request.POST.idNiveauEtude[i],request.POST.dureeNiveauEtude[i],request.POST.domaineNiveauEtude[i])
+		elif request.POST.actionNiveauEtude[i]=="remove":
+			removeNiveauEtude(request.POST.idNiveauEtude[i])
 def index(request):
     return HttpResponse('You are in utilisateur')
