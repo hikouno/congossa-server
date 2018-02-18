@@ -7,17 +7,17 @@ from composantProfil.models import Experience
 from composantProfil.models import Qualite
 
 class Offre(models.Model):
-	titre= models.CharField(max_length=200)
-	metier = models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
-	typeContrat = models.CharField(max_length=200)
-	localisation = models.CharField(max_length=200)
-	competenceRequise = models.CharField(max_length=200)
-	diplomeRequis =models.ManyToManyField(NiveauEtude)
-	dateDebut =  models.CharField(max_length=200)
-	dureeContrat = models.CharField(max_length=200)
-	experienceRequise= models.ManyToManyField(Experience)
-	description = models.CharField(max_length=400) # Plus long au cas ou
-	recruteur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+	titre= models.CharField(max_length=200, null=True, blank=True)
+	metier = models.ForeignKey(Metier, on_delete=models.CASCADE, null=True, blank=True)
+	typeContrat = models.CharField(max_length=200, null=True, blank=True)
+	localisation = models.CharField(max_length=200, null=True, blank=True)
+	competenceRequise = models.CharField(max_length=200, null=True, blank=True)
+	diplomeRequis =models.ManyToManyField(NiveauEtude, blank=True)
+	dateDebut =  models.CharField(max_length=200, null=True, blank=True)
+	dureeContrat = models.CharField(max_length=200, null=True, blank=True)
+	experienceRequise= models.ManyToManyField(Experience, blank=True)
+	description = models.CharField(max_length=400, null=True, blank=True) # Plus long au cas ou
+	recruteur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True, blank=True)
 	# Id genere automatiquement
 	@classmethod
 	def create (cls, titre,metier,typeContrat,localisation,competenceRequise,diplomeRequis,dateDebut,dureeContrat,experienceRequise,description,recruteur):
