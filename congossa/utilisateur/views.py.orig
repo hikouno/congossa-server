@@ -9,8 +9,8 @@ from .models import Utilisateur
 from .models import Competence
 from .models import NiveauEtude
 from .models import Qualite
-from composantProfil.views import CreateNiveauEtude
-from composantProfil.views import CreateQualite
+
+from composantProfil.views import EditCompetence
 from composantProfil.views import EditNiveauEtude
 #from composantProfil.views import EditQualite
 
@@ -113,7 +113,7 @@ def changerMdp(request):
 
 def ajouterNiveauEtude(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
-	user.add(CreateNiveauEtude(request.POST.duree,request.POST.domaine))
+	user.add(NiveauEtude.create(request.POST.duree,request.POST.domaine))
 ########
 def removeNiveauEtude(request):
 	niveauEtude = get_objet_or_404(NiveauEtude, id=request.POST.id)
@@ -127,7 +127,7 @@ def editeNiveauEtude(request):
 
 def ajouterQualite(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
-	user.add(CreateQualite(request.POST.qualiteAjoutee))
+	user.add(Qualite.create(request.POST.qualiteAjoutee))
 ######
 def removeQualite(request):
 	qualite= get_objet_or_404(Qualite, id=request.POST.id)
@@ -147,13 +147,21 @@ def editerMonProfil(request):
 	user=get_object_or_404(Utilisateur, username= request.POST.username)
 	#Competence
 	for i in range(1,request.POST.nbCompetence):
+<<<<<<< HEAD
+		if request.POST.actionCompetence.i="add"
+			ajouterCompetence(request.POST.competence.i)
+		elif request.POST.actionCompetence.i="edit"
+			editCompetence(request.POST.idCompetence.i,request.POST.competence.i)
+		elif request.POST.actionCompetence.i="remove"
+			removeCompetence(request.POST.idCompetence.i)
+=======
 		if request.POST.actionCompetence[i] == "add":
 			ajouterCompetence(request.POST.competence[i])
 		elif request.POST.actionCompetence[i]=="edit":
 			editCompetence(request.POST.idCompetence[i],request.POST.competence[i])
 		elif request.POST.actionCompetence[i]=="remove":
 			removeCompetence(request.POST.idCompetence[i])
-
+>>>>>>> 41c3e29860380e4e6fa74b4c5f5dfbc7958c056f
 	#Niveau d etude
 	for i in range(1,request.POST.nbNiveauEtude):
 		if request.POST.actionNiveauEtude[i]=="add":
