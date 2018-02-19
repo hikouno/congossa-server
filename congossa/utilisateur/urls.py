@@ -37,4 +37,6 @@ urlpatterns = [
     path('changerMdp/'\
         + '<slug:login>/'\
         + '<slug:nouveauMotDePasse>',views.changerMdp,name='changerMdp'),
+    path('changerNom/',views.changerNom,name='changerNom'),
+    path('changerPrenom/',views.changerPrenom,name='changerPrenom'),
 ]

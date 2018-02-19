@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
+from django.core import serializers
 
 from django.shortcuts import get_object_or_404
 
@@ -14,7 +15,7 @@ from .models import Offre, Demande
 
 @csrf_exempt
 def ajoutOffre(request):
-    data =  {'test': request.body} # création du ficier Json
+    data =  {'test': request.body.decode('utf-8')} # création du ficier Json
     #o = Offre(metier=request.POST.)
     return JsonResponse(data)
 
