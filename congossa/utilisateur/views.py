@@ -9,8 +9,8 @@ from .models import Utilisateur
 from .models import Competence
 from .models import NiveauEtude
 from .models import Qualite
-
-from composantProfil.views import EditCompetence
+from composantProfil.views import CreateNiveauEtude
+from composantProfil.views import CreateQualite
 from composantProfil.views import EditNiveauEtude
 #from composantProfil.views import EditQualite
 
@@ -113,7 +113,7 @@ def changerMdp(request):
 
 def ajouterNiveauEtude(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
-	user.add(NiveauEtude.create(request.POST.duree,request.POST.domaine))
+	user.add(CreateNiveauEtude(request.POST.duree,request.POST.domaine))
 ########
 def removeNiveauEtude(request):
 	niveauEtude = get_objet_or_404(NiveauEtude, id=request.POST.id)
@@ -127,7 +127,7 @@ def editeNiveauEtude(request):
 
 def ajouterQualite(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
-	user.add(Qualite.create(request.POST.qualiteAjoutee))
+	user.add(CreateQualite(request.POST.qualiteAjoutee))
 ######
 def removeQualite(request):
 	qualite= get_objet_or_404(Qualite, id=request.POST.id)
