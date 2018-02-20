@@ -1,19 +1,18 @@
 #UTLISATEUR
-from django.shortcuts import render
+import json
 from django.http import HttpResponse
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-
+from django.views.decorators.csrf import csrf_exempt
 from .models import Utilisateur
 from .models import Competence
 from .models import NiveauEtude
 from .models import Qualite
-
-from composantProfil.views import EditCompetence
-from composantProfil.views import EditNiveauEtude
+from composantProfil.views import CreateNiveauEtude
+from composantProfil.views import CreateQualite
 #from composantProfil.views import EditQualite
-
+from django.http import JsonResponse
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
@@ -43,14 +42,44 @@ def voirProfil(request):
 ##
 #  Fonction pour se connecter
 
-def login(request):
-	user = authenticate(username=nomDeCompte, password=motDePasse)
+def login_user(request, nomDeCompte, motDePasse):
+    user = authenticate(username=nomDeCompte, password=motDePasse)
+    
+    if user is not None :
+        login(request, user)
+        return JsonResponse({'success' : True})
+    else:
+        logout(request)
+        return JsonResponse({'success' : False})
+    
 
+def logout_user(request):
+    logout(request)
+    
+    return JsonResponse({'success' : True})
+
+@csrf_exempt
+def changerPrenom(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login = body['login']
+	newPrenom = body['newPrenom']
+	user=get_object_or_404(Utilisateur,username=login)
+	user.first_name=newPrenom
+	user.save()
 	return HttpResponse()
-
+@csrf_exempt
+def changerNom(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login = body['login']
+	newNom = body['newNom']
+	user=get_object_or_404(Utilisateur,username=login)
+	user.last_name=newNom
+	user.save()
+	return HttpResponse()
 ##
 #  S'enregistrer
-
 def register(request):
 	utilisateur.set_password(motDePasse)
 	utilisateur.save()
@@ -111,56 +140,101 @@ def changerMdp(request):
 # GESTION COMPOSANT PROFIL
 ###########################################
 
+def ajouterCompetence(request):
+	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user.competence.add(CreateCompetence(request.POST.contenuCompetence))
+	user.save()
+########
+def editeCompetence(request):
+	competence = get_objet_or_404(Competence, id=request.POST.id)
+	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	user.competence.exclude(competence=competence)
+	user.add(CreateCompetence(request.POST.contenu))
+	user.save()
+########
+def removeCompetence(request):
+	niveauEtude = get_objet_or_404(Competence, id=request.POST.id)
+	user.competence.exclude(competence=competence)
+	user.save()
+###########################################
 def ajouterNiveauEtude(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
-	user.add(NiveauEtude.create(request.POST.duree,request.POST.domaine))
-########
-def removeNiveauEtude(request):
-	niveauEtude = get_objet_or_404(NiveauEtude, id=request.POST.id)
-	niveauEtude.delete()
+	user.add(CreateNiveauEtude(request.POST.duree,request.POST.domaine))
+	user.save()
 ########
 def editeNiveauEtude(request):
 	niveauEtude= get_objet_or_404(NiveauEtude, id=request.POST.id)
-	EditNiveauEtude(competence,request.POST.newDuree,request.POST.newDomaine)
-
+	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	user.niveauEtude.exclude(niveauEtude=niveauEtude)
+	user.add(CreateNiveauEtude(request.POST.newDuree,request.POST.newDomaine))
+	user.save()
+########
+def removeNiveauEtude(request):
+	niveauEtude = get_objet_or_404(NiveauEtude, id=request.POST.id)
+	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	user.niveauEtude.exclude(niveauEtude=niveauEtude)
+	user.save()
 ###########################################
-
 def ajouterQualite(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
-	user.add(Qualite.create(request.POST.qualiteAjoutee))
+	user.qualite.add(CreateQualite(request.POST.qualiteAjoutee))
+	user.save()
+######
+def editQualite(request):
+	qualite= get_objet_or_404(Qualite, id=request.POST.id)
+	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	user.qualite.exclude(qualite=qualite)
+	user.qualite.add(CreateQualite(request.POST.qualiteAjoutee))
+	user.save()
 ######
 def removeQualite(request):
 	qualite= get_objet_or_404(Qualite, id=request.POST.id)
-	qualite.delete()
-#######
-#def editeQualite(request):
-#	qualite= get_objet_or_404(Qualite, id=request.POST.id)
-#	EditCompetence(qualite,request.POST.newContent)
-
+	user.qualite.exclude(qualite=qualite)
+	user.save()
 ###########################################
-
 def ajouterExperience(request):
 	user=get_object_or_404(Utilisateur, username = request.POST.username)
 	user.add(Experience.create(request.POST.idMetier,request.POST.dateDebut,request.POST.dateFin))
+	user.save()
+def editExperience(request):
+	experience= get_objet_or_404(Experience, id=request.POST.id)
+	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	user.experience.exclude(experience=experience)
+	user.experience.add(CreateQualite(request.POST.idNewMetier,request.POST.newDateDebut,request.POST.newDateFin))
+	user.save()
+######
+def removeExperience(request):
+	experience= get_objet_or_404(Experience, id=request.POST.id)
+	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	user.experience.exclude(experience=experience)
+	user.save()
 ###########################################
-def editerMonProfil(request):
-	user=get_object_or_404(Utilisateur, username= request.POST.username)
-	#Competence
-	for i in range(1,request.POST.nbCompetence):
-		if request.POST.actionCompetence[i] == "add":
-			ajouterCompetence(request.POST.competence[i])
-		elif request.POST.actionCompetence[i]=="edit":
-			editCompetence(request.POST.idCompetence[i],request.POST.competence[i])
-		elif request.POST.actionCompetence[i]=="remove":
-			removeCompetence(request.POST.idCompetence[i])
-
-	#Niveau d etude
-	for i in range(1,request.POST.nbNiveauEtude):
-		if request.POST.actionNiveauEtude[i]=="add":
-			ajouterNiveauEtude(request.POST.dureeNiveauEtude[i],request.POST.domaineNiveauEtude[i])
-		elif request.POST.actionNiveauEtude[i]=="edit":
-			editNiveauEtude(request.POST.idNiveauEtude[i],request.POST.dureeNiveauEtude[i],request.POST.domaineNiveauEtude[i])
-		elif request.POST.actionNiveauEtude[i]=="remove":
-			removeNiveauEtude(request.POST.idNiveauEtude[i])
+#def editerMonProfil(request):
+#	user=get_object_or_404(Utilisateur, username= request.POST.username)
+#	#Competence
+#	for i in range(1,request.POST.nbCompetence):
+#		if request.POST.actionCompetence[i] == "add":
+#			ajouterCompetence(request.POST.username,request.POST.competence[i])
+#		elif request.POST.actionCompetence[i]=="edit":
+#			editCompetence(request.POST.username,request.POST.idCompetence[i],request.POST.competence[i])
+#		elif request.POST.actionCompetence[i]=="remove":
+#			removeCompetence(request.POST.username,request.POST.idCompetence[i])
+#
+#	#Niveau d etude
+#	for i in range(1,request.POST.nbNiveauEtude):
+#		if request.POST.actionNiveauEtude[i]=="add":
+#			ajouterNiveauEtude(request.POST.username,request.POST.dureeNiveauEtude[i],request.POST.domaineNiveauEtude[i])
+#		elif request.POST.actionNiveauEtude[i]=="edit":
+#			editNiveauEtude(request.POST.username,request.POST.idNiveauEtude[i],request.POST.dureeNiveauEtude[i],request.POST.domaineNiveauEtude[i])
+#		elif request.POST.actionNiveauEtude[i]=="remove":
+#			removeNiveauEtude(request.POST.username,request.POST.idNiveauEtude[i])
+#	#Qualite
+#	for i in range(1,request.POST.nbQualite):
+#		if request.POST.actionQualite[i]=="add":
+#			ajouterQualite(request.POST.username,request.POST.contenuQualite[i])
+#		elif request.POST.actionQualite[i]=="edit":
+#			editQualite(request.POST.username,request.POST.idQualite[i],request.POST.contenuQualite[i])
+#		elif request.POST.actionQualite[i]=="remove":
+#			removeQualite(request.POST.username,request.POST.idQualite[i])
 def index(request):
     return HttpResponse('You are in utilisateur')
