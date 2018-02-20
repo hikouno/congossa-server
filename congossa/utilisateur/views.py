@@ -1,7 +1,7 @@
 #UTLISATEUR
 import json
 from django.http import HttpResponse
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -42,10 +42,17 @@ def voirProfil(request):
 ##
 #  Fonction pour se connecter
 
-def login(request):
-	user = authenticate(username=nomDeCompte, password=motDePasse)
+def login_user(request, nomDeCompte, motDePasse):
+    user = authenticate(username=nomDeCompte, password=motDePasse)
+    login(request, user)
 
-	return HttpResponse()
+    return HttpResponse()
+
+def logout_user(request):
+    logout(request)
+    
+    return HttpResponse('You are in utilisateur')
+
 @csrf_exempt
 def changerPrenom(request):
 	body_unicode = request.body.decode('utf-8')

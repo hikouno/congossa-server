@@ -11,7 +11,8 @@ urlpatterns = [
     # Mettre le mdp dans un post serait mieux mais pour tester les get c est pas mal
     path('login/'\
         + '<slug:nomDeCompte>/'\
-        + '<slug:motDePasse>',views.login, name='login'),
+        + '<slug:motDePasse>',views.login_user, name='login'),
+    path('logout/', views.logout_user, name='logout'),
     path('register/'\
     	+ '<slug:nomDeCompte>/'\
     	+ '<slug:motDePasse>/'\

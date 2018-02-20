@@ -15,6 +15,13 @@ from .models import Offre, Demande
 
 @csrf_exempt
 def ajoutOffre(request):
+    if request.user.is_authenticated:
+        # Do something for authenticated users.
+        return JsonResponse({'test': "oui", 'username' : request.user.username, 'pass' : request.user.password})
+    else:
+        # Do something for anonymous users.
+        return JsonResponse({'test': "non"})
+    
     data =  {'test': request.body.decode('utf-8')} # création du ficier Json
     #o = Offre(metier=request.POST.)
     return JsonResponse(data)

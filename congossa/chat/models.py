@@ -4,10 +4,12 @@ from django.conf import settings
 from django.template.defaultfilters import date as dj_date
 from django.utils.translation import ugettext as _
 
+from utilisateur.models import Utilisateur
+
 
 class Dialog(TimeStampedModel):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Dialog owner"), related_name="selfDialogs")
-    opponent = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Dialog opponent"))
+    owner = models.ForeignKey(Utilisateur, verbose_name=_("Dialog owner"), related_name="selfDialogs")
+    opponent = models.ForeignKey(Utilisateur, verbose_name=_("Dialog opponent"))
 
     def __str__(self):
         return _("Chat with ") + self.opponent.username
@@ -15,9 +17,9 @@ class Dialog(TimeStampedModel):
 
 class Message(TimeStampedModel, SoftDeletableModel):
     dialog = models.ForeignKey(Dialog, verbose_name=_("Dialog"), related_name="messages")
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Author"), related_name="messages")
+    sender = models.ForeignKey(Utilisateur, verbose_name=_("Author"), related_name="messages")
     text = models.TextField(verbose_name=_("Message text"))
-    read = models.BooleanField(verbose_name=_("Read"), default=False)
+    
     all_objects = models.Manager()
 
     def get_formatted_create_datetime(self):
