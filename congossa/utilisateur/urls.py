@@ -39,4 +39,9 @@ urlpatterns = [
         + '<slug:nouveauMotDePasse>',views.changerMdp,name='changerMdp'),
     path('changerNom/',views.changerNom,name='changerNom'),
     path('changerPrenom/',views.changerPrenom,name='changerPrenom'),
+    path('changerSexe/',views.changerSexe,name='changerSexe'),
+    path('changerMail/',views.changerMail,name='changerMail'),
+    path('changerDateDeNaissance/',views.changerDateDeNaissance,name='changerDateDeNaissance'),
+    path('changeTelephone/',views.changeTelephone,name='changeTelephone'),
+    path('changeDescription/',views.changeDescription,name='changeDescription'),
 ]

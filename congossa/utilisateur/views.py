@@ -46,6 +46,7 @@ def login(request):
 	user = authenticate(username=nomDeCompte, password=motDePasse)
 
 	return HttpResponse()
+
 @csrf_exempt
 def changerPrenom(request):
 	body_unicode = request.body.decode('utf-8')
@@ -56,6 +57,7 @@ def changerPrenom(request):
 	user.first_name=newPrenom
 	user.save()
 	return HttpResponse()
+
 @csrf_exempt
 def changerNom(request):
 	body_unicode = request.body.decode('utf-8')
@@ -64,6 +66,61 @@ def changerNom(request):
 	newNom = body['newNom']
 	user=get_object_or_404(Utilisateur,username=login)
 	user.last_name=newNom
+	user.save()
+	return HttpResponse()
+
+@csrf_exempt
+def changerSexe(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login = body['login']
+	newSexe = body['newSexe']
+	user=get_object_or_404(Utilisateur,username=login)
+	user.sexe=newSexe
+	user.save()
+	return HttpResponse()
+
+@csrf_exempt
+def changerMail(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login = body['login']
+	newEmail = body['newEmail']
+	user=get_object_or_404(Utilisateur,username=login)
+	user.email=newEmail
+	user.save()
+	return HttpResponse()
+
+@csrf_exempt
+def changerDateDeNaissance(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login = body['login']
+	DateDeNaissance = body['newDateDeNaisance']
+	user=get_object_or_404(Utilisateur,username=login)
+	user.dateDeNaissance=DateDeNaissance
+	user.save()
+	return HttpResponse()
+
+@csrf_exempt
+def changeTelephone(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login = body['login']
+	Telephone = body['newTelephone']
+	user=get_object_or_404(Utilisateur,username=login)
+	user.telephone=Telephone
+	user.save()
+	return HttpResponse()
+
+@csrf_exempt
+def changeDescription(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login = body['login']
+	Description = body['newDescription']
+	user=get_object_or_404(Utilisateur,username=login)
+	user.description=Description
 	user.save()
 	return HttpResponse()
 ##
