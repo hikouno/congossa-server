@@ -24,9 +24,9 @@ def ajoutDemande(request):
     body = json.loads(body_unicode)
 
     data =  {'myJson' :body['shortDescription']} # création du ficier Json
-    print(data)
+    print(body)
     #o = Offre(metier=request.POST.)
-    return JsonResponse(data)
+    return JsonResponse(body)
 
 
 

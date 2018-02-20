@@ -35,29 +35,34 @@ class Offre(models.Model):
 		return offre
 ###############################
 class Demande(models.Model):
-	metier = models.CharField(max_length=200)
+	categorie = models.CharField(max_length=200)
 	typeContrat = models.CharField(max_length=200)
-	localisation = models.CharField(max_length=2001)
-	competencePossede = models.CharField(max_length=200)
+	dateDebut =  models.CharField(max_length=200)
+	dateFin = models.CharField(max_length=200)
+	city = models.CharField(max_length=200)
+	description = models.CharField(max_length=400) # Plus long au cas ou
+
+	competencePossede = models.ManyToManyField(Competence)
+	qualitePossede = models.ManyToManyField(Qualite)
+	formations = models.ManyToManyField(Formation)
 	diplomePossede =models.ManyToManyField(NiveauEtude)
 	experiencePossede= models.ManyToManyField(Experience)
-	qualitePossede = models.ManyToManyField(Qualite)
-	dateDebut =  models.CharField(max_length=200)
-	dureeDisponibilite = models.CharField(max_length=200) # pas sur
-	description = models.CharField(max_length=400) # Plus long au cas ou
 	demandeur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
 	# Id genere automatiquement
 	@classmethod
-	def create (cls, titre,metier,typeContrat,localisation,competencePossede,diplomePossede,experiencePossede,qualitePossede,dateDebut,dureeDisponibilite,description,demandeur):
+	def create (cls, titre,categorie,typeContrat,dateFin, dateDebut, city, descritpion, competencePossede,qualitePossede,diplomePossede,experiencePossede,dateDebut,dureeDisponibilite,description,demandeur):
 		demande=cls(titre=titre\
-			,metier=metier\
+			,categorie=categorie\
 			,typeContrat=typeContrat\
-			,localisation=localisation\
+			,dateDebut=dateDebut\
+			,dateFin=dateFin\
+			,city=city\
+			,description=description\
 			,competencePossede=competencePossede\
+			,qualitePossede=qualitePossede\
+
 			,diplomePossede=diplomePossede\
 			,experiencePossede=experiencePossede\
-			,qualitePossede=qualitePossede\
-			,dateDebut=dateDebut\
 			,dureeDisponibilite=dureeDisponibilite\
 			,description=description\
 			,demandeur=demandeur)
