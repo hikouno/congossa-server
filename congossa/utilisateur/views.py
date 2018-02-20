@@ -44,14 +44,19 @@ def voirProfil(request):
 
 def login_user(request, nomDeCompte, motDePasse):
     user = authenticate(username=nomDeCompte, password=motDePasse)
-    login(request, user)
-
-    return HttpResponse()
+    
+    if user is not None :
+        login(request, user)
+        return JsonResponse({'success' : True})
+    else:
+        logout(request)
+        return JsonResponse({'success' : False})
+    
 
 def logout_user(request):
     logout(request)
     
-    return HttpResponse('You are in utilisateur')
+    return JsonResponse({'success' : True})
 
 @csrf_exempt
 def changerPrenom(request):
