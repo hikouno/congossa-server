@@ -50,7 +50,7 @@ class Demande(models.Model):
 	demandeur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
 	# Id genere automatiquement
 	@classmethod
-	def create (cls, titre,categorie,typeContrat,dateFin, dateDebut, city, descritpion, competencePossede,qualitePossede,diplomePossede,experiencePossede,dateDebut,dureeDisponibilite,description,demandeur):
+	def create (cls, titre,categorie,typeContrat,dateFin, dateDebut, city, descritpion, competencePossede,qualitePossede,diplomePossede,experiencePossede,description,demandeur):
 		demande=cls(titre=titre\
 			,categorie=categorie\
 			,typeContrat=typeContrat\
@@ -63,7 +63,6 @@ class Demande(models.Model):
 
 			,diplomePossede=diplomePossede\
 			,experiencePossede=experiencePossede\
-			,dureeDisponibilite=dureeDisponibilite\
 			,description=description\
 			,demandeur=demandeur)
 		return demande
