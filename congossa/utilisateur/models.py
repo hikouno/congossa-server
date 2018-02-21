@@ -19,6 +19,8 @@ class Utilisateur(User):
 	niveauEtude=models.ManyToManyField(NiveauEtude)
 	experience = models.ManyToManyField(Experience)
 	description = models.CharField(max_length=200,default='null')
+	sexe = models.CharField(max_length=200,default='null')
+	telephone = models.CharField(max_length=200,default='null')
 	#listeOffre
 	# Champs genere par heritage d user
 	# username = username (Obligatoire + Sert de clef unique)

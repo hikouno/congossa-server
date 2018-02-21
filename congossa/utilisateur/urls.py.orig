@@ -40,10 +40,13 @@ urlpatterns = [
         + '<slug:nouveauMotDePasse>',views.changerMdp,name='changerMdp'),
     path('changerNom/',views.changerNom,name='changerNom'),
     path('changerPrenom/',views.changerPrenom,name='changerPrenom'),
+<<<<<<< HEAD
     path('changerSexe/',views.changerSexe,name='changerSexe'),
     path('changerMail/',views.changerMail,name='changerMail'),
     path('changerDateDeNaissance/',views.changerDateDeNaissance,name='changerDateDeNaissance'),
     path('changeTelephone/',views.changeTelephone,name='changeTelephone'),
     path('changeDescription/',views.changeDescription,name='changeDescription'),
-    path('createDiplome/',views.createDiplome,name='createDiplome'),
 ]
+=======
+]
+>>>>>>> 80d44300f8722aac27e3763fd4cc6691022585d8

@@ -21,7 +21,6 @@ def ajoutOffre(request):
     else:
         # Do something for anonymous users.
         return JsonResponse({'test': "non"})
-
     data =  {'test': request.body.decode('utf-8')} # création du ficier Json
     #o = Offre(metier=request.POST.)
     return JsonResponse(data)
