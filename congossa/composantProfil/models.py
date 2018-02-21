@@ -45,6 +45,7 @@ class Qualite(models.Model):
 		return qualite
 	#id genere automatiquement
 	#useless ou nb année
+#############################
 class Experience(models.Model):
 	metierPratique= models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
 	dateDebut=datetime
@@ -54,3 +55,15 @@ class Experience(models.Model):
 	def create (cls,content):
 		experience=cls(contenu=nom)
 		return experience
+#############################
+class Formation(models.Model):
+	intitule=models.CharField(max_length=200)
+	dateDebut=datetime
+	dateFin=datetime
+	#id genere automatiquement
+	@classmethod
+	def create(cls, intitule, dateDebut, dateFin):
+		formation = cls(intitule=intitule\
+			, dateDebut=dateDebut\
+			, dateFin=dateFin)
+		return formation

@@ -5,6 +5,9 @@ from composantProfil.models import Metier
 from composantProfil.models import NiveauEtude
 from composantProfil.models import Experience
 from composantProfil.models import Qualite
+from composantProfil.models import Competence
+from composantProfil.models import Formation
+
 
 class Offre(models.Model):
 	titre= models.CharField(max_length=200, null=True, blank=True)
@@ -35,30 +38,31 @@ class Offre(models.Model):
 		return offre
 ###############################
 class Demande(models.Model):
-	metier = models.CharField(max_length=200)
-	typeContrat = models.CharField(max_length=200)
-	localisation = models.CharField(max_length=2001)
-	competencePossede = models.CharField(max_length=200)
-	diplomePossede =models.ManyToManyField(NiveauEtude)
-	experiencePossede= models.ManyToManyField(Experience)
-	qualitePossede = models.ManyToManyField(Qualite)
-	dateDebut =  models.CharField(max_length=200)
-	dureeDisponibilite = models.CharField(max_length=200) # pas sur
-	description = models.CharField(max_length=400) # Plus long au cas ou
+	categorie = models.CharField(max_length=200, blank=True)
+	typeContrat = models.CharField(max_length=200, blank=True)
+	dateDebut =  models.CharField(max_length=200, blank=True)
+	dateFin = models.CharField(max_length=200, blank=True)
+	city = models.CharField(max_length=200, blank=True)
+	description = models.CharField(max_length=400, blank=True) # Plus long au cas ou
+
+	competencePossede = models.ManyToManyField(Competence, blank=True)
+	qualitePossede = models.ManyToManyField(Qualite, blank=True)
+	formations = models.ManyToManyField(Formation, blank=True)
+	diplomePossede =models.ManyToManyField(NiveauEtude, blank=True)
+	experiencePossede= models.ManyToManyField(Experience, blank=True)
 	demandeur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
 	# Id genere automatiquement
 	@classmethod
-	def create (cls, titre,metier,typeContrat,localisation,competencePossede,diplomePossede,experiencePossede,qualitePossede,dateDebut,dureeDisponibilite,description,demandeur):
-		demande=cls(titre=titre\
-			,metier=metier\
+	def create (cls,categorie,typeContrat, dateDebut, dateFin, city, description, competencePossede,qualitePossede,diplomePossede,experiencePossede,demandeur):
+		demande=cls(categorie=categorie\
 			,typeContrat=typeContrat\
-			,localisation=localisation\
+			,dateDebut=dateDebut\
+			,dateFin=dateFin\
+			,city=city\
+			,description=description\
 			,competencePossede=competencePossede\
+			,qualitePossede=qualitePossede\
 			,diplomePossede=diplomePossede\
 			,experiencePossede=experiencePossede\
-			,qualitePossede=qualitePossede\
-			,dateDebut=dateDebut\
-			,dureeDisponibilite=dureeDisponibilite\
-			,description=description\
 			,demandeur=demandeur)
 		return demande
