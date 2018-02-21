@@ -5,6 +5,9 @@ from composantProfil.models import Metier
 from composantProfil.models import NiveauEtude
 from composantProfil.models import Experience
 from composantProfil.models import Qualite
+from composantProfil.models import Competence
+from composantProfil.models import Formation
+
 
 class Offre(models.Model):
 	titre= models.CharField(max_length=200, null=True, blank=True)
@@ -35,24 +38,23 @@ class Offre(models.Model):
 		return offre
 ###############################
 class Demande(models.Model):
-	categorie = models.CharField(max_length=200)
-	typeContrat = models.CharField(max_length=200)
-	dateDebut =  models.CharField(max_length=200)
-	dateFin = models.CharField(max_length=200)
-	city = models.CharField(max_length=200)
-	description = models.CharField(max_length=400) # Plus long au cas ou
+	categorie = models.CharField(max_length=200, blank=True)
+	typeContrat = models.CharField(max_length=200, blank=True)
+	dateDebut =  models.CharField(max_length=200, blank=True)
+	dateFin = models.CharField(max_length=200, blank=True)
+	city = models.CharField(max_length=200, blank=True)
+	description = models.CharField(max_length=400, blank=True) # Plus long au cas ou
 
-	competencePossede = models.ManyToManyField(Competence)
-	qualitePossede = models.ManyToManyField(Qualite)
-	formations = models.ManyToManyField(Formation)
-	diplomePossede =models.ManyToManyField(NiveauEtude)
-	experiencePossede= models.ManyToManyField(Experience)
+	competencePossede = models.ManyToManyField(Competence, blank=True)
+	qualitePossede = models.ManyToManyField(Qualite, blank=True)
+	formations = models.ManyToManyField(Formation, blank=True)
+	diplomePossede =models.ManyToManyField(NiveauEtude, blank=True)
+	experiencePossede= models.ManyToManyField(Experience, blank=True)
 	demandeur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
 	# Id genere automatiquement
 	@classmethod
-	def create (cls, titre,categorie,typeContrat,dateFin, dateDebut, city, descritpion, competencePossede,qualitePossede,diplomePossede,experiencePossede,description,demandeur):
-		demande=cls(titre=titre\
-			,categorie=categorie\
+	def create (cls,categorie,typeContrat, dateDebut, dateFin, city, description, competencePossede,qualitePossede,diplomePossede,experiencePossede,demandeur):
+		demande=cls(categorie=categorie\
 			,typeContrat=typeContrat\
 			,dateDebut=dateDebut\
 			,dateFin=dateFin\
@@ -60,9 +62,7 @@ class Demande(models.Model):
 			,description=description\
 			,competencePossede=competencePossede\
 			,qualitePossede=qualitePossede\
-
 			,diplomePossede=diplomePossede\
 			,experiencePossede=experiencePossede\
-			,description=description\
 			,demandeur=demandeur)
 		return demande

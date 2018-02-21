@@ -21,7 +21,7 @@ def ajoutOffre(request):
     else:
         # Do something for anonymous users.
         return JsonResponse({'test': "non"})
-    
+
     data =  {'test': request.body.decode('utf-8')} # création du ficier Json
     #o = Offre(metier=request.POST.)
     return JsonResponse(data)
@@ -31,10 +31,12 @@ def ajoutDemande(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
 
-    data =  {'myJson' :body['shortDescription']} # création du ficier Json
+    data =  {'myJson' :body['firstname']} # création du ficier Json
     print(body)
     #o = Offre(metier=request.POST.)
-    return JsonResponse(body)
+    #demande=Demande.Create(body[''])
+	#metier.save()
+    return JsonResponse(data)
 
 
 
