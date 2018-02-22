@@ -41,21 +41,25 @@ def voirProfil(request):
 
 ##
 #  Fonction pour se connecter
-
-def login_user(request, nomDeCompte, motDePasse):
+@csrf_exempt
+def login_user(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    nomDeCompte = body['login']
+    motDePasse = body['password']
     user = authenticate(username=nomDeCompte, password=motDePasse)
-    
-    if user is not None :
+
+    if user is not None:
         login(request, user)
         return JsonResponse({'success' : True})
     else:
         logout(request)
         return JsonResponse({'success' : False})
-    
+
 
 def logout_user(request):
     logout(request)
-    
+
     return JsonResponse({'success' : True})
 
 @csrf_exempt
