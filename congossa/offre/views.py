@@ -50,21 +50,21 @@ def ajoutDemande(request):
             city=body['city'],
             description=body['shortDescription'])
         #Experiences
-        for i in range(len(body['experiences'])):
-            exp = Experience.objects.create()
-            demande.experiencePossede.add(experience)
+        #for i in range(len(body['experiences'])):
+            #exp = Experience.objects.create()
+            #demande.experiencePossede.add(experience)
         #Formations
-        for i in range(len(body['formations'])):
-            form = Formation.objects.create(#TODO)
-            demande.formations.add(form)
+        #for i in range(len(body['formations'])):
+            #form = Formation.objects.create(#TODO)
+            #demande.formations.add(form)
         #Qualities
-        for i in range(len(body['tableQualities'])):
-            qual = Qualite.objects.create(#TODO)
-            demande.qualitePossede.add(qual)
+        #for i in range(len(body['tableQualities'])):
+            #qual = Qualite.objects.create(#TODO)
+            #demande.qualitePossede.add(qual)
         #Competences
-        for i in range(len(body['tableSkills'])):
-            comp = Competence.objects.create(#TODO)
-            demande.competencePossede.add(comp)
+        #for i in range(len(body['tableSkills'])):
+            #comp = Competence.objects.create(#TODO)
+            #demande.competencePossede.add(comp)
         #User
         demande.demandeur = request.user
 
