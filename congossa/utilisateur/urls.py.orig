@@ -46,7 +46,7 @@ urlpatterns = [
     path('changerDateDeNaissance/',views.changerDateDeNaissance,name='changerDateDeNaissance'),
     path('changeTelephone/',views.changeTelephone,name='changeTelephone'),
     path('changeDescription/',views.changeDescription,name='changeDescription'),
-]
+    path('createDiplome/',views.createDiplome,name='createDiplome'),
 =======
+>>>>>>> 8ecf18f8f2d356f0a10b9ffa1507fb65725c0143
 ]
->>>>>>> 80d44300f8722aac27e3763fd4cc6691022585d8

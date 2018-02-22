@@ -46,4 +46,6 @@ urlpatterns = [
     path('changeTelephone/',views.changeTelephone,name='changeTelephone'),
     path('changeDescription/',views.changeDescription,name='changeDescription'),
     path('createDiplome/',views.createDiplome,name='createDiplome'),
+    path('removeDiplome/',views.removeDiplome,name='removeDiplome'),
+
 ]

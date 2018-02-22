@@ -67,7 +67,7 @@ def changerPrenom(request):
 	user=get_object_or_404(Utilisateur,username=login)
 	user.first_name=newPrenom
 	user.save()
-	return HttpResponse()
+	return JsonResponse({'success' : True,})
 
 @csrf_exempt
 def changerNom(request):
@@ -78,7 +78,7 @@ def changerNom(request):
 	user=get_object_or_404(Utilisateur,username=login)
 	user.last_name=newNom
 	user.save()
-	return HttpResponse()
+	return JsonResponse({'success' : True,})
 
 @csrf_exempt
 def changerSexe(request):
@@ -89,7 +89,7 @@ def changerSexe(request):
 	user=get_object_or_404(Utilisateur,username=login)
 	user.sexe=newSexe
 	user.save()
-	return HttpResponse()
+	return JsonResponse({'success' : True,})
 
 @csrf_exempt
 def changerMail(request):
@@ -100,7 +100,7 @@ def changerMail(request):
 	user=get_object_or_404(Utilisateur,username=login)
 	user.email=newEmail
 	user.save()
-	return HttpResponse()
+	return JsonResponse({'success' : True,})
 
 @csrf_exempt
 def changerDateDeNaissance(request):
@@ -111,7 +111,7 @@ def changerDateDeNaissance(request):
 	user=get_object_or_404(Utilisateur,username=login)
 	user.dateDeNaissance=DateDeNaissance
 	user.save()
-	return HttpResponse()
+	return JsonResponse({'success' : True,})
 
 @csrf_exempt
 def changeTelephone(request):
@@ -122,7 +122,7 @@ def changeTelephone(request):
 	user=get_object_or_404(Utilisateur,username=login)
 	user.telephone=Telephone
 	user.save()
-	return HttpResponse()
+	return JsonResponse({'success' : True,})
 
 @csrf_exempt
 def changeDescription(request):
@@ -133,18 +133,32 @@ def changeDescription(request):
 	user=get_object_or_404(Utilisateur,username=login)
 	user.description=Description
 	user.save()
-	return HttpResponse()
+	return JsonResponse({'success' : True,})
 
 @csrf_exempt
 def createDiplome(request):
 	body_unicode = request.body.decode('utf-8')
 	body = json.loads(body_unicode)
 	login = body['login']
-	domaineDiplome = body['newDescription']
+	domaineDiplome = body['newDomaineDiplome']
 	dureeDiplome = body['newDureeDiplome']
 	user=get_object_or_404(Utilisateur,username=login)
-	diplome=NiveauEtude.create()
-	user.niveauEtude.add
+	diplome=CreateNiveauEtude(dureeDiplome,domaineDiplome)
+	user.niveauEtude.add(diplome)
+	user.save()
+	return JsonResponse({'success' : True,'id':str(diplome.id)})
+
+@csrf_exempt
+def removeDiplome(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login = body['login']
+	idDiplome = body['idDiplome']
+	user=get_object_or_404(Utilisateur,username=login)
+	diplome=get_object_or_404(NiveauEtude,id=idDiplome)
+	user.niveauEtude.remove(diplome)
+	user.save()
+	return JsonResponse({'success' : True,})
 ##
 #  S'enregistrer
 def register(request):
