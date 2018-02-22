@@ -30,12 +30,49 @@ def ajoutDemande(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
 
-    #data =  {'myJson' :body['firstname']} # création du ficier Json
-    print(body)
-    #o = Offre(metier=request.POST.)
-    #demande=Demande.Create(body[''])
-	#metier.save()
-    return JsonResponse(body)
+    if request.user.is_authenticated:
+
+        print(body['categorie'])
+        print(body['city'])
+        print(body['dateDebut'])
+        print(body['dateFin'])
+        print(body['experiences'])
+        print(body['formations'])
+        print(body['shortDescription'])
+        print(body['tableQualities'])
+        print(body['tableSkills'])
+        print(body['typeOfJob'])
+
+        demande=Demande.Create(categorie=body['categorie'],
+            typeContrat=body['typeOfJob'],
+            dateDebut=body['dateDebut'],
+            dateFin=body['dateFin'],
+            city=body['city'],
+            description=body['shortDescription'])
+        #Experiences
+        for i in range(len(body['experiences'])):
+            exp = Experience.objects.create()
+            demande.experiencePossede.add(experience)
+        #Formations
+        for i in range(len(body['formations'])):
+            form = Formation.objects.create(#TODO)
+            demande.formations.add(form)
+        #Qualities
+        for i in range(len(body['tableQualities'])):
+            qual = Qualite.objects.create(#TODO)
+            demande.qualitePossede.add(qual)
+        #Competences
+        for i in range(len(body['tableSkills'])):
+            comp = Competence.objects.create(#TODO)
+            demande.competencePossede.add(comp)
+        #User
+        demande.demandeur = request.user
+
+        demande.save()
+
+        return JsonResponse({'success': "OK"})
+    else :
+        return JsonResponse({'success': "KO"})
 
 
 

@@ -31,3 +31,7 @@ def CreateExperience(metier,dateDebut,dateFin):
 	return experience
 #	return HttpResponse("experience %s du %s au %s cree" % metier.intitule, dateDebut, dateFin)
 ##########################
+def CreateFormation(intitule, duree):
+	formation = Formation.objects.get_or_create(intitule=intitule, duree=duree)
+	return formation
+	

@@ -58,12 +58,10 @@ class Experience(models.Model):
 #############################
 class Formation(models.Model):
 	intitule=models.CharField(max_length=200)
-	dateDebut=datetime
-	dateFin=datetime
+	duree = models.CharField(max_length=200, blank=True)
 	#id genere automatiquement
 	@classmethod
-	def create(cls, intitule, dateDebut, dateFin):
+	def create(cls, intitule, duree):
 		formation = cls(intitule=intitule\
-			, dateDebut=dateDebut\
-			, dateFin=dateFin)
+			, duree=duree)
 		return formation
