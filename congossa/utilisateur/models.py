@@ -1,15 +1,14 @@
 #UTILISATEUR
 from django.db import models
 import datetime
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from composantProfil.models import NiveauEtude
 from composantProfil.models import Experience
 from composantProfil.models import Qualite
 from composantProfil.models import Competence
 
-
-
-class Utilisateur(User):
+class Utilisateur(AbstractUser):
+	
 	dateDeNaissance = models.CharField(max_length=200,default='null')
 	localisation = models.CharField(max_length=200,default='null')
 	# A voir pour le delete et le default

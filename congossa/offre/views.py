@@ -30,12 +30,12 @@ def ajoutDemande(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
 
-    data =  {'myJson' :body['firstname']} # création du ficier Json
+    #data =  {'myJson' :body['firstname']} # création du ficier Json
     print(body)
     #o = Offre(metier=request.POST.)
     #demande=Demande.Create(body[''])
 	#metier.save()
-    return JsonResponse(data)
+    return JsonResponse(body)
 
 
 
