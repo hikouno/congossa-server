@@ -6,7 +6,7 @@ from .models import Qualite
 # Create your views here.
 ##########################
 def CreateCompetence(contenue):
-	competence, competenceCree = Competence.objects.get_or_create(defaults,contenu=contenue)
+	competence, competenceCree = Competence.objects.get_or_create(contenu=contenue)
 	return competence
 #	return HttpResponse("Competence %s cree" % contenu)
 ##########################

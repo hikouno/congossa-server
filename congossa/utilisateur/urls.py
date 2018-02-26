@@ -46,6 +46,7 @@ urlpatterns = [
     path('changeDescription/',views.changeDescription,name='changeDescription'),
     path('createDiplome/',views.createDiplome,name='createDiplome'),
     path('removeDiplome/',views.removeDiplome,name='removeDiplome'),
-    path('viderQualite/',views.viderQualite,name='viderQualite'),
     path('changeQualite/',views.changeQualite,name='changeQualite'),
+    path('changeCompetence/',views.changeCompetence,name='changeCompetence'),
+    path('changeExperienceFormation/',views.changeExperienceFormation,name='changeExperienceFormation')
 ]

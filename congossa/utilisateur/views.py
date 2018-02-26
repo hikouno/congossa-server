@@ -11,6 +11,7 @@ from .models import NiveauEtude
 from .models import Qualite
 from composantProfil.views import CreateNiveauEtude
 from composantProfil.views import CreateQualite
+from composantProfil.views import CreateCompetence
 #from composantProfil.views import EditQualite
 from django.http import JsonResponse
 
@@ -173,25 +174,16 @@ def removeDiplome(request):
 	return JsonResponse({'success' : True,})
 
 @csrf_exempt
-def viderQualite(request):
-	if request.user.is_authenticated:
-		user=request.user
-		user.qualite.clear()
-		user.save()
-		return JsonResponse({'success' : True,})
-	else:
-		return JsonResponse({'success' : False,})
-
-@csrf_exempt
 def changeQualite(request):
 	body_unicode = request.body.decode('utf-8')
 	body = json.loads(body_unicode)
-	nomQualite = body['newQualite']
+	qualites = body['newQualites']
 	if request.user.is_authenticated:
-		qual=CreateQualite(nomQualite)
 		user=request.user
-		user.qualite.add(qual)
-		print(user.qualite.all())
+		user.qualite.clear()
+		for nomQual in qualites:
+			qual=CreateQualite(nomQual)
+			user.qualite.add(qual)
 		user.save()
 		return JsonResponse({'success' : True,})
 	else:
@@ -202,6 +194,7 @@ def getQualite(request):
 	body_unicode = request.body.decode('utf-8')
 	body = json.loads(body_unicode)
 	if request.user.is_authenticated:
+		user=request.user
 		contenuQual=[]
 		for qual in user.qualite.all():
 			contenuQual=contenuQual + [qual.contenu]
@@ -210,24 +203,16 @@ def getQualite(request):
 		return JsonResponse({'success' : False,'qualite' : []})
 
 @csrf_exempt
-def viderCompetence(request):
-	if request.user.is_authenticated:
-		user=request.user
-		user.qualite.clear()
-		user.save()
-		return JsonResponse({'success' : True,})
-	else:
-		return JsonResponse({'success' : False,})
-
-@csrf_exempt
 def changeCompetence(request):
 	body_unicode = request.body.decode('utf-8')
 	body = json.loads(body_unicode)
-	nomQualite = body['newQualite']
+	competences = body['newCompetences']
 	if request.user.is_authenticated:
-		qual=CreateQualite(nomQualite)
 		user=request.user
-		user.qualite.add(qual)
+		user.competence.clear()
+		for nomCompetence in competences:
+			comp=CreateCompetence(nomCompetence)
+			user.competence.add(comp)
 		user.save()
 		return JsonResponse({'success' : True,})
 	else:
@@ -238,12 +223,25 @@ def getCompetence(request):
 	body_unicode = request.body.decode('utf-8')
 	body = json.loads(body_unicode)
 	if request.user.is_authenticated:
-		contenuQual=[]
-		for qual in user.qualite.all():
-			contenuQual=contenuQual + [qual.contenu]
-		return JsonResponse({'success' : True,'qualite' : contenuQual})
+		user=request.user
+		contenuComp=[]
+		for comp in user.competence.all():
+			contenuComp=contenuComp + [comp.contenu]
+		return JsonResponse({'success' : True,'qualite' : contenuComp})
 	else:
 		return JsonResponse({'success' : False, 'qualite' : []})
+@csrf_exempt
+def changeExperienceFormation(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	if request.user.is_authenticated:
+		user=request.user
+		experiences=body['newExperience']
+		print(experiences)
+		user.experience.clear()
+	else:
+		return JsonResponse({'success' : False})
+
 ##
 #  S'enregistrer
 def register(request):
