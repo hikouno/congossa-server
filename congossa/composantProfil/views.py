@@ -5,8 +5,8 @@ from .models import NiveauEtude
 from .models import Qualite
 # Create your views here.
 ##########################
-def CreateCompetence(contenu):
-	competence = Competence.objects.get_or_create(contenu = contenu)
+def CreateCompetence(contenue):
+	competence, competenceCree = Competence.objects.get_or_create(defaults,contenu=contenue)
 	return competence
 #	return HttpResponse("Competence %s cree" % contenu)
 ##########################
@@ -21,8 +21,8 @@ def CreateMetier(contenu):
 	return metier
 #	return HttpResponse("Metier %s cree" % contenu)
 ##########################
-def CreateQualite(contenu):
-	qualite=Qualite.objects.get_or_create(contenu)
+def CreateQualite(contenue):
+	qualite, qualiteCree=Qualite.objects.get_or_create(contenu=contenue)
 	return qualite
 #	return HttpResponse("Metier %s cree" % contenu)
 ##########################

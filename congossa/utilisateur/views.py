@@ -115,10 +115,10 @@ def changerMail(request):
 def changerDateDeNaissance(request):
 	body_unicode = request.body.decode('utf-8')
 	body = json.loads(body_unicode)
-	DateDeNaissance = body['newDateDeNaisance']
+	dateDeNaissance = body['newDateDeNaissance']
 	if request.user.is_authenticated:
 		user=request.user
-		user.dateDeNaissance=DateDeNaissance
+		user.dateDeNaissance=dateDeNaissance
 		user.save()
 		return JsonResponse({'success' : True,})
 	else:
@@ -127,10 +127,10 @@ def changerDateDeNaissance(request):
 def changeTelephone(request):
 	body_unicode = request.body.decode('utf-8')
 	body = json.loads(body_unicode)
-	Telephone = body['newTelephone']
+	telephone = body['newTelephone']
 	if request.user.is_authenticated:
 		user=request.user
-		user.telephone=Telephone
+		user.telephone=telephone
 		user.save()
 		return JsonResponse({'success' : True,})
 	else:
@@ -139,10 +139,10 @@ def changeTelephone(request):
 def changeDescription(request):
 	body_unicode = request.body.decode('utf-8')
 	body = json.loads(body_unicode)
-	Description = body['newDescription']
+	description = body['newDescription']
 	if request.user.is_authenticated:
 		user=request.user
-		user.description=Description
+		user.description=description
 		user.save()
 		return JsonResponse({'success' : True,})
 	else:
@@ -171,6 +171,79 @@ def removeDiplome(request):
 	user.niveauEtude.remove(diplome)
 	user.save()
 	return JsonResponse({'success' : True,})
+
+@csrf_exempt
+def viderQualite(request):
+	if request.user.is_authenticated:
+		user=request.user
+		user.qualite.clear()
+		user.save()
+		return JsonResponse({'success' : True,})
+	else:
+		return JsonResponse({'success' : False,})
+
+@csrf_exempt
+def changeQualite(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	nomQualite = body['newQualite']
+	if request.user.is_authenticated:
+		qual=CreateQualite(nomQualite)
+		user=request.user
+		user.qualite.add(qual)
+		print(user.qualite.all())
+		user.save()
+		return JsonResponse({'success' : True,})
+	else:
+		return JsonResponse({'success' : False,})
+
+@csrf_exempt
+def getQualite(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	if request.user.is_authenticated:
+		contenuQual=[]
+		for qual in user.qualite.all():
+			contenuQual=contenuQual + [qual.contenu]
+		return JsonResponse({'success' : True,'qualite' : contenuQual})
+	else:
+		return JsonResponse({'success' : False,'qualite' : []})
+
+@csrf_exempt
+def viderCompetence(request):
+	if request.user.is_authenticated:
+		user=request.user
+		user.qualite.clear()
+		user.save()
+		return JsonResponse({'success' : True,})
+	else:
+		return JsonResponse({'success' : False,})
+
+@csrf_exempt
+def changeCompetence(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	nomQualite = body['newQualite']
+	if request.user.is_authenticated:
+		qual=CreateQualite(nomQualite)
+		user=request.user
+		user.qualite.add(qual)
+		user.save()
+		return JsonResponse({'success' : True,})
+	else:
+		return JsonResponse({'success' : False,})
+
+@csrf_exempt
+def getCompetence(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	if request.user.is_authenticated:
+		contenuQual=[]
+		for qual in user.qualite.all():
+			contenuQual=contenuQual + [qual.contenu]
+		return JsonResponse({'success' : True,'qualite' : contenuQual})
+	else:
+		return JsonResponse({'success' : False, 'qualite' : []})
 ##
 #  S'enregistrer
 def register(request):
