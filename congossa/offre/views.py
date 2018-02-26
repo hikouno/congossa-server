@@ -32,20 +32,6 @@ def ajoutDemande(request):
 
     if request.user.is_authenticated:
 
-        print(body['categorie'])
-        print(body['city'])
-        print(body['dateDebut'])
-        print(body['dateFin'])
-        print(body['experiences'])
-        print(body['formations'])
-        print(body['shortDescription'])
-        print(body['tableQualities'])
-        print(body['tableSkills'])
-        print(body['typeOfJob'])
-
-        print('attention :')
-        print(body['experiences'][0])
-
         demande=Demande.objects.create(categorie=body['categorie'],
             typeContrat=body['typeOfJob'],
             dateDebut=body['dateDebut'],
