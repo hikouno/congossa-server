@@ -9,7 +9,7 @@ from django.core import serializers
 
 from django.shortcuts import get_object_or_404
 
-from .models import Offre, Demande
+from .models import Offre, Demande, Experience
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
@@ -43,16 +43,22 @@ def ajoutDemande(request):
         print(body['tableSkills'])
         print(body['typeOfJob'])
 
-        demande=Demande.Create(categorie=body['categorie'],
+        print('attention :')
+        print(body['experiences'][0])
+
+        demande=Demande.objects.create(categorie=body['categorie'],
             typeContrat=body['typeOfJob'],
             dateDebut=body['dateDebut'],
             dateFin=body['dateFin'],
             city=body['city'],
             description=body['shortDescription'])
         #Experiences
-        #for i in range(len(body['experiences'])):
-            #exp = Experience.objects.create()
-            #demande.experiencePossede.add(experience)
+        for i in range(len(body['experiences'])):
+            exp = Experience.objects.create(
+                metier=body['experiences'][i]['experience'],
+                dateDebut=body['experiences'][i]['dateDebut'],
+                dateFin=body['experiences'][i]['dateFin'])
+            demande.experiencePossede.add(exp)
         #Formations
         #for i in range(len(body['formations'])):
             #form = Formation.objects.create(#TODO)
