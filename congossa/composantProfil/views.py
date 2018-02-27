@@ -1,7 +1,6 @@
 #COMPOSANT OFFRE
 from django.shortcuts import render
 from .models import Competence
-from .models import NiveauEtude
 from .models import Qualite
 # Create your views here.
 ##########################
@@ -34,4 +33,3 @@ def CreateExperience(metier,dateDebut,dateFin):
 def CreateFormation(intitule, duree):
 	formation = Formation.objects.get_or_create(intitule=intitule, duree=duree)
 	return formation
-	

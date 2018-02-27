@@ -2,7 +2,6 @@
 from django.db import models
 from utilisateur.models import Utilisateur
 from composantProfil.models import Metier
-from composantProfil.models import NiveauEtude
 from composantProfil.models import Experience
 from composantProfil.models import Qualite
 from composantProfil.models import Competence
@@ -10,17 +9,18 @@ from composantProfil.models import Formation
 
 
 class Offre(models.Model):
-	titre= models.CharField(max_length=200, null=True, blank=True)
-	metier = models.ForeignKey(Metier, on_delete=models.CASCADE, null=True, blank=True)
-	typeContrat = models.CharField(max_length=200, null=True, blank=True)
-	localisation = models.CharField(max_length=200, null=True, blank=True)
-	competenceRequise = models.CharField(max_length=200, null=True, blank=True)
-	diplomeRequis =models.ManyToManyField(NiveauEtude, blank=True)
-	dateDebut =  models.CharField(max_length=200, null=True, blank=True)
-	dureeContrat = models.CharField(max_length=200, null=True, blank=True)
-	experienceRequise= models.ManyToManyField(Experience, blank=True)
-	description = models.CharField(max_length=400, null=True, blank=True) # Plus long au cas ou
-	recruteur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True, blank=True)
+	titre= models.CharField(max_length=200, blank=True)
+	categorie = models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
+	typeContrat = models.CharField(max_length=200, blank=True)
+	dateDebut =  models.DateField(null=True)
+	dateFin = models.DateField(null=True)
+	city = models.CharField(max_length=200, blank=True)
+	description = models.CharField(max_length=400, blank=True) # Plus long au cas ou
+
+	competencePossede = models.ManyToManyField(Competence, blank=True)
+	qualitePossede = models.ManyToManyField(Qualite, blank=True)
+	experiencePossede= models.ManyToManyField(Experience, blank=True)
+	recruteur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
 	# Id genere automatiquement
 	@classmethod
 	def create (cls, titre,metier,typeContrat,localisation,competenceRequise,diplomeRequis,dateDebut,dureeContrat,experienceRequise,description,recruteur):
@@ -38,22 +38,20 @@ class Offre(models.Model):
 		return offre
 ###############################
 class Demande(models.Model):
-	categorie = models.CharField(max_length=200, blank=True)
+	categorie = models.ForeignKey(Metier, on_delete=models.CASCADE, blank=True)
 	typeContrat = models.CharField(max_length=200, blank=True)
-	dateDebut =  models.CharField(max_length=200, blank=True)
-	dateFin = models.CharField(max_length=200, blank=True)
+	dateDebut =  models.DateField(null=True)
+	dateFin = models.DateField(null=True)
 	city = models.CharField(max_length=200, blank=True)
 	description = models.CharField(max_length=400, blank=True) # Plus long au cas ou
 
 	competencePossede = models.ManyToManyField(Competence, blank=True)
 	qualitePossede = models.ManyToManyField(Qualite, blank=True)
-	formations = models.ManyToManyField(Formation, blank=True)
-	diplomePossede =models.ManyToManyField(NiveauEtude, blank=True)
 	experiencePossede= models.ManyToManyField(Experience, blank=True)
 	demandeur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
 	# Id genere automatiquement
 	@classmethod
-	def create (cls,categorie,typeContrat, dateDebut, dateFin, city, description, competencePossede,qualitePossede,diplomePossede,experiencePossede,demandeur):
+	def create (cls,categorie,typeContrat, dateDebut, dateFin, city, description, competencePossede,qualitePossede,experiencePossede,demandeur):
 		demande=cls(categorie=categorie\
 			,typeContrat=typeContrat\
 			,dateDebut=dateDebut\
@@ -62,7 +60,6 @@ class Demande(models.Model):
 			,description=description\
 			,competencePossede=competencePossede\
 			,qualitePossede=qualitePossede\
-			,diplomePossede=diplomePossede\
 			,experiencePossede=experiencePossede\
 			,demandeur=demandeur)
 		return demande
