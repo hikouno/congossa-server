@@ -2,10 +2,11 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import AbstractUser
-from composantProfil.models import NiveauEtude
+from composantProfil.models import Formation
 from composantProfil.models import Experience
 from composantProfil.models import Qualite
 from composantProfil.models import Competence
+from composantProfil.models import NiveauEtude
 
 class Utilisateur(AbstractUser):
 	
@@ -15,7 +16,7 @@ class Utilisateur(AbstractUser):
 	avatar = models.CharField(max_length=200,default='null')
 	competence = models.ManyToManyField(Competence)
 	qualite = models.ManyToManyField(Qualite)
-	niveauEtude=models.ManyToManyField(NiveauEtude)
+	formation=models.ManyToManyField(Formation)
 	experience = models.ManyToManyField(Experience)
 	description = models.CharField(max_length=200,default='null')
 	sexe = models.CharField(max_length=200,default='null')
