@@ -455,16 +455,5 @@ def getAge(request):
 
     return JsonResponse({'age' : age})
 
-def getLocalisation(request):
-    # Récupération du fichier json
-    body_unicode = request.body.decode('utf-8')
-    body = json.loads(body_unicode)
-    id_demande = body['id_demande']
-
-    user = getUser(id_demande)
-    localisation = localisation
-
-    return JsonResponse({'localisation' : localisation})
-
 def index(request):
     return HttpResponse('You are in utilisateur')

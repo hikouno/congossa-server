@@ -74,10 +74,21 @@ def voirAnnonce(request, nom):
 ###########################################
 # Fonctions pour l'affichage des demandes #
 ###########################################
-def getOffre(id_demande):
-    offre = Demande.objects.get(id=id_demande)
+def getDemande(id_demande):
+    demande = Demande.objects.get(id=id_demande)
 
-    return offre
+    return demande
+
+def getLocalisation(request):
+    # Récupération du fichier json
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    id_demande = body['id_demande']
+
+    demande = getDemande(id_demande)
+    localisation = demande.localisation
+
+    return JsonResponse({'localisation' : localisation})
 
 def getTypeEmploi(request):
     # Récupération du fichier json
@@ -85,8 +96,8 @@ def getTypeEmploi(request):
     body = json.loads(body_unicode)
     id_demande = body['id_demande']
 
-    offre = getOffre(id_demande)
-    typeEmploi = offre.typeContrat
+    demande = getDemande(id_demande)
+    typeEmploi = demande.typeContrat
 
     return JsonResponse({'typeEmploi' : typeEmploi})
 
@@ -96,8 +107,8 @@ def getTitre(request):
     body = json.loads(body_unicode)
     id_demande = body['id_demande']
 
-    offre = getOffre(id_demande)
-    titre = offre.titre
+    demande = getDemande(id_demande)
+    titre = demande.titre
 
     return JsonResponse({'titre' : titre})
 
@@ -107,7 +118,7 @@ def getQualite(request):
     body = json.loads(body_unicode)
     id_demande = body['id_demande']
 
-    offre = getOffre(id_demande)
+    demande = getDemande(id_demande)
     qualite = "test" ########## A MODIFIER
 
     return JsonResponse({'qualite' : qualite})
@@ -118,7 +129,7 @@ def getEcole(request):
     body = json.loads(body_unicode)
     id_demande = body['id_demande']
 
-    offre = getOffre(id_demande)
+    demande = getDemande(id_demande)
     ecole = "test2" ########### A MODIFIER
 
     return JsonResponse({'ecole' : ecole})
@@ -129,7 +140,7 @@ def getEcoleDescription(request):
     body = json.loads(body_unicode)
     id_demande = body['id_demande']
 
-    offre = getOffre(id_demande)
+    demande = getDemande(id_demande)
     description = "test3" ############ A MODIFIER
 
     return JsonResponse({'description' : description})
@@ -140,7 +151,7 @@ def getExperiences(request):
     body = json.loads(body_unicode)
     id_demande = body['id_demande']
 
-    offre = getOffre(id_demande)
+    demande = getDemande(id_demande)
     experiences = "test4" ################ A MODIFIER
 
     return JsonResponse({'experiences' : experiences})
@@ -151,7 +162,7 @@ def getCompetences(request):
     body = json.loads(body_unicode)
     id_demande = body['id_demande']
 
-    offre = getOffre(id_demande)
+    demande = getDemande(id_demande)
     competences = "test5" ########## A MODIFIER
 
     return JsonResponse({'competences' : competences})
