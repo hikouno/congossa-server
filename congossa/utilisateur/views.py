@@ -9,9 +9,12 @@ from .models import Utilisateur
 from .models import Competence
 from .models import NiveauEtude
 from .models import Qualite
+from .models import Formation
 from composantProfil.views import CreateNiveauEtude
 from composantProfil.views import CreateQualite
 from composantProfil.views import CreateCompetence
+from composantProfil.views import CreateExperience
+from composantProfil.views import CreateFormation
 #from composantProfil.views import EditQualite
 from django.http import JsonResponse
 
@@ -52,10 +55,23 @@ def login_user(request):
 
     if user is not None:
         login(request, user)
-        return JsonResponse({'success' : True})
+        donneeUtilisateur={
+        'prenom': user.first_name,
+        'nom': user.last_name,
+        'sexe': user.sexe,
+        'dateDeNaissance': user.dateDeNaissance,
+        'email': user.email,
+        'telephone': user.telephone,
+        'description': user.description,
+        #'formation': user.formation,
+        #'experience': user.experience,
+        #'competence': user.competence,
+        #'qualite': user.qualite
+        }
+        return JsonResponse({'success' : True, 'userData': donneeUtilisateur})
     else:
         logout(request)
-        return JsonResponse({'success' : False})
+        return JsonResponse({'success' : False, 'userData': {}})
 
 
 def logout_user(request):
@@ -237,8 +253,15 @@ def changeExperienceFormation(request):
 	if request.user.is_authenticated:
 		user=request.user
 		experiences=body['newExperience']
-		print(experiences)
 		user.experience.clear()
+		for exp in experiences:
+			user.experience.add(CreateExperience(exp['experience'],exp['period'],exp['domaine']))
+		formations=body['newFormation']
+		user.formation.clear()
+		for form in formations:
+			user.formation.add(CreateFormation(form['formation'],form['period'],form['domaine']))
+		print(user.formation.all())
+		return JsonResponse({'success' : True})
 	else:
 		return JsonResponse({'success' : False})
 

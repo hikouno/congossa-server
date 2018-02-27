@@ -47,24 +47,12 @@ class Qualite(models.Model):
 	#useless ou nb année
 #############################
 class Experience(models.Model):
-	metier= models.CharField(max_length=200)
-	dateDebut=models.CharField(max_length=200, blank=True)
-	dateFin=models.CharField(max_length=200, blank=True)
+	experience=models.CharField(max_length=200, blank=True)
+	periode=models.CharField(max_length=200, blank=True)
+	domaine= models.CharField(max_length=200, blank=True)
 	#id genere automatiquement
-
-	@classmethod
-	def create (cls,metier, dateDebut, dateFin):
-		experience=cls(metier=metier,
-			dateDebut=dateDebut,
-			dateFin=dateFin)
-		return experience
 #############################
 class Formation(models.Model):
-	intitule=models.CharField(max_length=200)
-	duree = models.CharField(max_length=200, blank=True)
-	#id genere automatiquement
-	@classmethod
-	def create(cls, intitule, duree):
-		formation = cls(intitule=intitule\
-			, duree=duree)
-		return formation
+	formation=models.CharField(max_length=200, blank=True)
+	periode=models.CharField(max_length=200, blank=True)
+	domaine= models.CharField(max_length=200, blank=True)
