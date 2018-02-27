@@ -37,6 +37,7 @@ AUTH_USER_MODEL = 'utilisateur.Utilisateur'
 INSTALLED_APPS = [
     'composantProfil.apps.ComposantprofilConfig',
     'utilisateur.apps.UtilisateurConfig',
+    'chat.apps.ChatConfig',
     'offre.apps.OffreConfig',
     'django.contrib.admin',
     'django.contrib.auth',
