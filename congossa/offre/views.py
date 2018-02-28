@@ -7,9 +7,10 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.core import serializers
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 from .models import Offre, Demande, Experience
+from .serializers import DemandeSerializer, OffreSerializer
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
@@ -70,6 +71,30 @@ def ajoutDemande(request):
 	# renvoie la description de la premiere annonce dont la String metier est egale a la string $nom
 def voirAnnonce(request, nom):
 	return HttpResponse("Une annonce pour vous:  %s." % (get_object_or_404(Offre,metier = nom).description+" propose par "+ get_object_or_404(Offre,metier = nom).recruteur.prenom))
+
+
+
+def getDemandes(request):
+    
+    if request.user.is_authenticated:
+        
+        demandes = get_list_or_404(Demande, demandeur = request.user)
+        demandes_json = DemandeSerializer(demandes, many=True)
+        
+        return JsonResponse(demandes_json.data, safe=False)
+    else :
+        return JsonResponse({'success': False})
+
+def getOffres(request):
+    
+    if request.user.is_authenticated:
+        
+        offres = get_list_or_404(Offre, recruteur = request.user)
+        offres_json = OffreSerializer(offres, many=True)
+        
+        return JsonResponse(offres_json.data, safe=False)
+    else :
+        return JsonResponse({'success': False})
 
 ###########################################
 # Fonctions pour l'affichage des demandes #
