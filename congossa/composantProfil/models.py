@@ -30,7 +30,7 @@ class Qualite(models.Model):
 class Experience(models.Model):
 	titre=models.CharField(max_length=200);
 	domaine= models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
-	duree=models.FloatField(null=True)
+	duree=models.CharField(max_length=200, blank=True)
 	#id genere automatiquement
 
 	@classmethod
@@ -42,8 +42,8 @@ class Experience(models.Model):
 #############################
 class Formation(models.Model):
 	titre=models.CharField(max_length=200);
-	domaine= models.CharField(max_length=200)
-	duree=models.CharField(max_length=200)
+	domaine= models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
+	duree=models.CharField(max_length=200, blank=True)
 	#id genere automatiquement
 
 	@classmethod
