@@ -9,7 +9,7 @@ from django.core import serializers
 
 from django.shortcuts import get_object_or_404
 
-from .models import Offre, Demande, Experience
+from .models import Offre, Demande, Experience, Metier
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
@@ -32,7 +32,8 @@ def ajoutDemande(request):
 
     if request.user.is_authenticated:
 
-        demande=Demande.objects.create(categorie=body['categorie'],
+        metier1, metier_bool = Metier.objects.get_or_create(intitule=body['categorie'])
+        demande=Demande.objects.create(categorie=metier1,
             typeContrat=body['typeOfJob'],
             dateDebut=body['dateDebut'],
             dateFin=body['dateFin'],
@@ -40,10 +41,12 @@ def ajoutDemande(request):
             description=body['shortDescription'])
         #Experiences
         for i in range(len(body['experiences'])):
+            metier, bool =Metier.objects.get_or_create(
+                intitule=body['experiences'][i]['domaine'])
             exp = Experience.objects.create(
-                metier=body['experiences'][i]['experience'],
-                dateDebut=body['experiences'][i]['dateDebut'],
-                dateFin=body['experiences'][i]['dateFin'])
+                titre=body['experiences'][i]['experience'],
+                domaine=metier,
+                duree=body['experiences'][i]['period'])
             demande.experiencePossede.add(exp)
         #Formations
         #for i in range(len(body['formations'])):

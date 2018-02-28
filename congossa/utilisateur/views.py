@@ -7,10 +7,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Utilisateur
 from .models import Competence
-from .models import NiveauEtude
 from .models import Qualite
 from .models import Formation
-from composantProfil.views import CreateNiveauEtude
 from composantProfil.views import CreateQualite
 from composantProfil.views import CreateCompetence
 from composantProfil.views import CreateExperience
@@ -122,7 +120,7 @@ def changerMail(request):
 	body = json.loads(body_unicode)
 	newEmail = body['newEmail']
 	if request.user.is_authenticated:
-		user=request.user		
+		user=request.user
 		user.email=newEmail
 		user.save()
 		return JsonResponse({'success' : True,})
