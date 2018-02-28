@@ -1,7 +1,6 @@
 #COMPOSANT OFFRE
 from django.shortcuts import render
 from .models import Competence
-from .models import NiveauEtude
 from .models import Qualite
 from .models import Experience
 from .models import Formation
@@ -36,4 +35,3 @@ def CreateExperience(experience,periode,domaine):
 def CreateFormation(formation,periode,domaine):
 	formation, formationCree = Formation.objects.get_or_create(formation=formation,periode=periode,domaine=domaine)
 	return formation
-	

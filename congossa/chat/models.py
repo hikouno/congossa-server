@@ -5,12 +5,13 @@ from django.utils.translation import ugettext as _
 from django.utils import timezone
 
 from utilisateur.models import Utilisateur
+from offre.models import Offre
+from offre.models import Demande
 
 
 class Dialog(models.Model):
-    owner = models.ForeignKey(Utilisateur, related_name='owner', on_delete=models.CASCADE, blank=True)
-    opponent = models.ForeignKey(Utilisateur, related_name='opponent', on_delete=models.CASCADE, blank=True)
-
+    owner = models.ForeignKey(Offre, related_name='owner', on_delete=models.CASCADE, blank=True)
+    opponent = models.ForeignKey(Demande, related_name='opponent', on_delete=models.CASCADE, blank=True)
 
 class Message(models.Model):
     dialog = models.ForeignKey(Dialog, on_delete=models.CASCADE, blank=True)

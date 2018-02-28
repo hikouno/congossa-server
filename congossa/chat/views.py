@@ -7,13 +7,13 @@ from itertools import chain
 
 from .models import Dialog, Message
 
-## Returns dialog object if given two user ids
+## Returns dialog object if given two ids : one for 'offre' the other for 'demande'
 #
 @csrf_exempt
-def getDialogFromIds(login1, login2):
-    user1 = get_object_or_404(Utilisateur,username=login1)
-    user2 = get_object_or_404(Utilisateur,username=login2)
-    dialog = get_object_or_404(Dialog, owner=login1, opponent=login2)
+def getDialogFromIds(id_offre, id_demande):
+    owner = Offre.objects.get(id=id_offre)
+    opponent = Demande.objects.get(id=id_demande)
+    dialog = Dialog.objects.get(owner=owner, opponent=opponent)
 
     return dialog
 
@@ -22,8 +22,13 @@ def getDialogFromIds(login1, login2):
 #
 @csrf_exempt
 def addMessage(request):
-    user1 = get_object_or_404(Utilisateur,username=login1)
-    m = Message(dialog=getDialogFromIds(login1,login2), sender=user1, text=message)
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    idoffre = body['id_offre']
+    iddemande = body['id_demande']
+    sender = request.user;
+
+    m = Message(dialog=getDialogFromIds(id_offre,id_demande), sender=sender, text=message)
     m.save()
     ## NOTIFIER l'utilisateur 2 qu'un message a été reçue
 
@@ -32,7 +37,12 @@ def addMessage(request):
 #
 @csrf_exempt
 def getDialog(request):
-    dialog = getDialogFromIds(login1,login2)
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    idoffre = body['id_offre']
+    iddemande = body['id_demande']
+
+    dialog = getDialogFromIds(id_offre,id_demande)
     messages = dialog.message_set.all().order_by('timestamp') # getting messages corresponding to the dialog and ordering them
     data =  { 'messages' : messages}
 
@@ -40,7 +50,12 @@ def getDialog(request):
 
 @csrf_exempt
 def getLastMessage(request):
-    dialog = getDialogFromIds(login1,login2)
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    idoffre = body['id_offre']
+    iddemande = body['id_demande']
+
+    dialog = getDialogFromIds(id_offre,id_demande)
     messages = dialog.message_set.all().order_by('timestamp') # getting messages corresponding to the dialog and ordering them
     data = {'last-message' : messages[0]}
 
@@ -48,25 +63,30 @@ def getLastMessage(request):
 
 @csrf_exempt
 def newDialog(request):
-    user1 = get_object_or_404(Utilisateur,username=login1)
-    user2 = get_object_or_404(Utilisateur,username=login2)
-    d = Dialog(owner=user1, opponent=user2)
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    idoffre = body['id_offre']
+    iddemande = body['id_demande']
+
+    d = Dialog(owner=idoffre, opponent=iddemande)
     d.save()
 
 ## Returns all the name of the people who had a dialog with user
 #
 @csrf_exempt
 def allDialogUser(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    idoffre = body['id_offre']
     dialogs_list = []
-    user = request.user;
 
-    dialogs1 = Dialog.objects.filter(owner=user)
+    dialogs1 = Dialog.objects.filter(owner=id_offre)
     for d in dialogs1:
-        dialogs_list+=[d.opponent.username]
+        dialogs_list+=[d.opponent.demandeur.username]
 
-    dialogs2 = Dialog.objects.filter(opponent=user)
+    dialogs2 = Dialog.objects.filter(opponent=id_offre)
     for d in dialogs2:
-        dialogs_list+=[d.opponent.username]
+        dialogs_list+=[d.owner.recruteur.username]
 
     data = {'dialogs' : dialogs_list}
     return JsonResponse(data)

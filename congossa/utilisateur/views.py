@@ -137,7 +137,7 @@ def changerMail(request):
 	body = json.loads(body_unicode)
 	newEmail = body['newEmail']
 	if request.user.is_authenticated:
-		user=request.user		
+		user=request.user
 		user.email=newEmail
 		user.save()
 		return JsonResponse({'success' : True,})
@@ -333,7 +333,7 @@ def editerSonProfil(request):
 #   Changer de mot de passe
 
 def changerMdp(request):
-	user=get_object_or_404(Utilisateur,username = login)
+	user=Utilisateur.objects.get(username = login)
 	user.set_password(nouveauMotDePasse)
 	user.save()
 	return HttpResponse('mot de passe de %s modifie' % user.username)
@@ -343,71 +343,71 @@ def changerMdp(request):
 ###########################################
 
 def ajouterCompetence(request):
-	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user=Utilisateur.objects.get(username = request.POST.username)
 	user.competence.add(CreateCompetence(request.POST.contenuCompetence))
 	user.save()
 ########
 def editeCompetence(request):
-	competence = get_objet_or_404(Competence, id=request.POST.id)
-	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	competence = Competence.objects.get(id=request.POST.id)
+	user = Utilisateur.objects.get(username=request.POST.username)
 	user.competence.exclude(competence=competence)
 	user.add(CreateCompetence(request.POST.contenu))
 	user.save()
 ########
 def removeCompetence(request):
-	niveauEtude = get_objet_or_404(Competence, id=request.POST.id)
+	niveauEtude = Competence.objects.get(id=request.POST.id)
 	user.competence.exclude(competence=competence)
 	user.save()
 ###########################################
 def ajouterNiveauEtude(request):
-	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user=Utilisateur.objects.get(username = request.POST.username)
 	user.add(CreateNiveauEtude(request.POST.duree,request.POST.domaine))
 	user.save()
 ########
 def editeNiveauEtude(request):
-	niveauEtude= get_objet_or_404(NiveauEtude, id=request.POST.id)
-	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	niveauEtude= NiveauEtude.objects.get(id=request.POST.id)
+	user = Utilisateur.objects.get(username=request.POST.username)
 	user.niveauEtude.exclude(niveauEtude=niveauEtude)
 	user.add(CreateNiveauEtude(request.POST.newDuree,request.POST.newDomaine))
 	user.save()
 ########
 def removeNiveauEtude(request):
-	niveauEtude = get_objet_or_404(NiveauEtude, id=request.POST.id)
-	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	niveauEtude = NiveauEtude.object.get(id=request.POST.id)
+	user = Utilisateur.objects.get(username=request.POST.username)
 	user.niveauEtude.exclude(niveauEtude=niveauEtude)
 	user.save()
 ###########################################
 def ajouterQualite(request):
-	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user=Utilisateur.objects.get(username = request.POST.username)
 	user.qualite.add(CreateQualite(request.POST.qualiteAjoutee))
 	user.save()
 ######
 def editQualite(request):
-	qualite= get_objet_or_404(Qualite, id=request.POST.id)
-	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	qualite = Qualite.object.get(id=request.POST.id)
+	user = Utilisateur.objects.get(username=request.POST.username)
 	user.qualite.exclude(qualite=qualite)
 	user.qualite.add(CreateQualite(request.POST.qualiteAjoutee))
 	user.save()
 ######
 def removeQualite(request):
-	qualite= get_objet_or_404(Qualite, id=request.POST.id)
+	qualite= Qualite.objects.get(id=request.POST.id)
 	user.qualite.exclude(qualite=qualite)
 	user.save()
 ###########################################
 def ajouterExperience(request):
-	user=get_object_or_404(Utilisateur, username = request.POST.username)
+	user=Utilisateur.objects.get(username = request.POST.username)
 	user.add(Experience.create(request.POST.idMetier,request.POST.dateDebut,request.POST.dateFin))
 	user.save()
 def editExperience(request):
-	experience= get_objet_or_404(Experience, id=request.POST.id)
-	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	experience = Experience.objects.get(id=request.POST.id)
+	user = Utilisateur.objects.get(username=request.POST.username)
 	user.experience.exclude(experience=experience)
 	user.experience.add(CreateQualite(request.POST.idNewMetier,request.POST.newDateDebut,request.POST.newDateFin))
 	user.save()
 ######
 def removeExperience(request):
-	experience= get_objet_or_404(Experience, id=request.POST.id)
-	user = get_objet_or_404(Utilisateur, username=request.POST.username)
+	experience= Experience.objects.get(id=request.POST.id)
+	user = Utilisateur.objects.get(username=request.POST.username)
 	user.experience.exclude(experience=experience)
 	user.save()
 ###########################################
@@ -438,5 +438,37 @@ def removeExperience(request):
 #			editQualite(request.POST.username,request.POST.idQualite[i],request.POST.contenuQualite[i])
 #		elif request.POST.actionQualite[i]=="remove":
 #			removeQualite(request.POST.username,request.POST.idQualite[i])
+
+###########################################
+# Fonctions pour l'affichage des demandes #
+###########################################
+def getUser(id_demande):
+    offre = Demande.objects.get(id=id_demande)
+    user = Utilisateur.objects.get(id=offre.demandeur.id)
+
+    return user;
+
+def getName(request):
+    # Récupération du fichier json
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    id_demande = body['id_demande']
+
+    user = getUser(id_demande)
+    nom_prenom = user.prenom + user.nom
+
+    return JsonResponse({'nom_prenom' : nom_prenom})
+
+def getAge(request):
+    # Récupération du fichier json
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    id_demande = body['id_demande']
+
+    user = getUser(id_demande)
+    age = user.dateDeNaissance
+
+    return JsonResponse({'age' : age})
+
 def index(request):
     return HttpResponse('You are in utilisateur')
