@@ -55,6 +55,21 @@ def login_user(request):
 
     if user is not None:
         login(request, user)
+        qualite=""
+        for qual in user.qualite.all():
+        	qualite=qualite+qual.contenu+","
+        qualite=qualite[:-1]
+        competence=""
+        for comp in user.competence.all():
+        	competence=competence+comp.contenu+","
+        competence=competence[:-1]
+        formation=[]
+        for form in user.formation.all():
+        	formation=formation+[form.formation,form.periode,form.domaine]
+        experience=[]
+        for exp in user.experience.all():
+        	experience=experience+[exp.experience,exp.periode,exp.domaine]
+        print(experience)
         donneeUtilisateur={
         'prenom': user.first_name,
         'nom': user.last_name,
@@ -63,10 +78,10 @@ def login_user(request):
         'email': user.email,
         'telephone': user.telephone,
         'description': user.description,
-        #'formation': user.formation,
-        #'experience': user.experience,
-        #'competence': user.competence,
-        #'qualite': user.qualite
+        'formation': formation,
+        'experience': experience,
+        'competence': competence,
+        'qualite': qualite
         }
         return JsonResponse({'success' : True, 'userData': donneeUtilisateur})
     else:
