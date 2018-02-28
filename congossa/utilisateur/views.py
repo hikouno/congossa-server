@@ -66,7 +66,7 @@ def login_user(request):
         	formation=formation+[form.titre,form.domaine,form.duree]
         experience=[]
         for exp in user.experience.all():
-        	experience=experience+[exp.titre,exp.domaine,exp.duree]
+        	experience=experience+[exp.titre,exp.domaine.intitule,exp.duree]
         print(experience)
         donneeUtilisateur={
         'prenom': user.first_name,
