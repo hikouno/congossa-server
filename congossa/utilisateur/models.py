@@ -6,7 +6,6 @@ from composantProfil.models import Formation
 from composantProfil.models import Experience
 from composantProfil.models import Qualite
 from composantProfil.models import Competence
-from composantProfil.models import NiveauEtude
 
 class Utilisateur(AbstractUser):
 	

@@ -7,10 +7,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Utilisateur
 from .models import Competence
-from .models import NiveauEtude
 from .models import Qualite
 from .models import Formation
-from composantProfil.views import CreateNiveauEtude
 from composantProfil.views import CreateQualite
 from composantProfil.views import CreateCompetence
 from composantProfil.views import CreateExperience
@@ -65,10 +63,10 @@ def login_user(request):
         competence=competence[:-1]
         formation=[]
         for form in user.formation.all():
-        	formation=formation+[form.formation,form.periode,form.domaine]
+        	formation=formation+[form.titre,form.duree,form.domaine]
         experience=[]
         for exp in user.experience.all():
-        	experience=experience+[exp.experience,exp.periode,exp.domaine]
+        	experience=experience+[exp.titre,exp.duree,exp.domaine]
         print(experience)
         donneeUtilisateur={
         'prenom': user.first_name,
@@ -179,31 +177,6 @@ def changeDescription(request):
 		return JsonResponse({'success' : True,})
 	else:
 		return JsonResponse({'success' : False,})
-@csrf_exempt
-def createDiplome(request):
-	body_unicode = request.body.decode('utf-8')
-	body = json.loads(body_unicode)
-	login = body['login']
-	domaineDiplome = body['newDomaineDiplome']
-	dureeDiplome = body['newDureeDiplome']
-	user=get_object_or_404(Utilisateur,username=login)
-	diplome=CreateNiveauEtude(dureeDiplome,domaineDiplome)
-	user.niveauEtude.add(diplome)
-	user.save()
-	return JsonResponse({'success' : True,'id':str(diplome.id)})
-
-@csrf_exempt
-def removeDiplome(request):
-	body_unicode = request.body.decode('utf-8')
-	body = json.loads(body_unicode)
-	login = body['login']
-	idDiplome = body['idDiplome']
-	user=get_object_or_404(Utilisateur,username=login)
-	diplome=get_object_or_404(NiveauEtude,id=idDiplome)
-	user.niveauEtude.remove(diplome)
-	user.save()
-	return JsonResponse({'success' : True,})
-
 @csrf_exempt
 def changeQualite(request):
 	body_unicode = request.body.decode('utf-8')
