@@ -27,11 +27,11 @@ def CreateQualite(contenue):
 	return qualite
 #	return HttpResponse("Metier %s cree" % contenu)
 ##########################
-def CreateExperience(experience,periode,domaine):
-	experience, experienceCree=Experience.objects.get_or_create(experience=experience,periode=periode,domaine=domaine)
+def CreateExperience(titre,domaine,duree):
+	experience, experienceCree=Experience.objects.get_or_create(titre=titre,domaine=domaine,duree=duree)
 	return experience
 #	return HttpResponse("experience %s du %s au %s cree" % metier.intitule, dateDebut, dateFin)
 ##########################
-def CreateFormation(formation,periode,domaine):
-	formation, formationCree = Formation.objects.get_or_create(formation=formation,periode=periode,domaine=domaine)
+def CreateFormation(titre,domaine,duree):
+	formation, formationCree = Formation.objects.get_or_create(titre=titre,domaine=domaine,duree=duree)
 	return formation
