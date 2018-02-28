@@ -12,7 +12,4 @@ admin.site.register(Competence)
 admin.site.register(Qualite)
 admin.site.register(Experience)
 admin.site.register(Formation)
-<<<<<<< HEAD
-=======
 admin.site.register(Metier)
->>>>>>> 59f45d5fcaedcd79a3c0b705966eb728a8f02efe
