@@ -28,7 +28,6 @@ class Qualite(models.Model):
 	#useless ou nb année
 #############################
 class Experience(models.Model):
-<<<<<<< HEAD
 	titre=models.CharField(max_length=200);
 	domaine= models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
 	duree=models.DurationField(null=True)
@@ -53,14 +52,3 @@ class Formation(models.Model):
 			domaine=domaine,
 			duree=duree)
 		return formation
-=======
-	experience=models.CharField(max_length=200, blank=True)
-	periode=models.CharField(max_length=200, blank=True)
-	domaine= models.CharField(max_length=200, blank=True)
-	#id genere automatiquement
-#############################
-class Formation(models.Model):
-	formation=models.CharField(max_length=200, blank=True)
-	periode=models.CharField(max_length=200, blank=True)
-	domaine= models.CharField(max_length=200, blank=True)
->>>>>>> 4b29cadbfb01863541dbfd0cd6c276a61907e8aa
