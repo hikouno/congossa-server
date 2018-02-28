@@ -8,7 +8,7 @@ from composantProfil.models import Qualite
 from composantProfil.models import Competence
 
 class Utilisateur(AbstractUser):
-	
+
 	dateDeNaissance = models.CharField(max_length=200,default='null')
 	localisation = models.CharField(max_length=200,default='null')
 	# A voir pour le delete et le default
@@ -51,4 +51,3 @@ class Utilisateur(AbstractUser):
 			,avatar=avatar\
 			,description=description)
 		return utilisateur
-
