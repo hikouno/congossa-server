@@ -12,8 +12,8 @@ class Offre(models.Model):
 	titre= models.CharField(max_length=200, blank=True)
 	categorie = models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
 	typeContrat = models.CharField(max_length=200, blank=True)
-	dateDebut =  models.CharField(max_length=200, blank=True)
-	dateFin = models.CharField(max_length=200, blank=True)
+	dateDebut =  models.DateField(null=True, blank=True)
+	dateFin = models.DateField(null=True, blank=True)
 	city = models.CharField(max_length=200, blank=True)
 	description = models.CharField(max_length=400, blank=True) # Plus long au cas ou
 
@@ -41,8 +41,8 @@ class Offre(models.Model):
 class Demande(models.Model):
 	categorie = models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
 	typeContrat = models.CharField(max_length=200, blank=True)
-	dateDebut =  models.CharField(max_length=200, blank=True)
-	dateFin = models.CharField(max_length=200, blank=True)
+	dateDebut =  models.DateField(null=True, blank=True)
+	dateFin = models.DateField(null=True, blank=True)
 	city = models.CharField(max_length=200, blank=True)
 	description = models.CharField(max_length=400, blank=True) # Plus long au cas ou
 
