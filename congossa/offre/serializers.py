@@ -5,6 +5,8 @@ from composantProfil.serializers import QualiteSerializer
 from composantProfil.serializers import ExperienceSerializer
 from composantProfil.serializers import FormationSerializer
 
+from utilisateur.serializers import UtilisateurFormationSerializer
+
 from .models import Demande, Offre
 
 
@@ -28,13 +30,14 @@ class DemandeSerializer(serializers.ModelSerializer):
     competencePossede = CompetenceSerializer(many=True)
     qualitePossede = QualiteSerializer(many=True)
     experiencePossede = ExperienceSerializer(many=True)
+    demandeur = UtilisateurFormationSerializer()
 
     class Meta:
           model = Demande
 
           fields = (
                 'categorie', 'typeContrat', 'dateDebut', 'dateFin', 'city', 'description', 'competencePossede', 'qualitePossede',
-                'experiencePossede')
+                'experiencePossede', 'demandeur')
                 
           depth = 2
 
@@ -44,12 +47,13 @@ class OffreSerializer(serializers.ModelSerializer):
     competenceRequises = CompetenceSerializer(many=True)
     qualiteRequises = QualiteSerializer(many=True)
     experienceRequises = ExperienceSerializer(many=True)
+    recruteur = UtilisateurFormationSerializer()
 
     class Meta:
           model = Offre
 
           fields = (
                 'titre', 'categorie', 'typeContrat', 'dateDebut', 'dateFin', 'city', 'description', 'competenceRequises', 'qualiteRequises',
-                'experienceRequises')
+                'experienceRequises', 'recruteur')
                 
           depth = 2

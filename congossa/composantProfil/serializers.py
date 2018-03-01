@@ -21,12 +21,22 @@ class QualiteSerializer(serializers.ModelSerializer):
 
 #############################
 class ExperienceSerializer(serializers.ModelSerializer):
+    
+    domaine = MetierSerializer()
+    
     class Meta:
         model = Experience
         fields = ('titre', 'domaine', 'duree')
+        
+        depth = 2
 
 #############################
 class FormationSerializer(serializers.ModelSerializer):
+    
+    domaine = MetierSerializer()
+    
     class Meta:
         model = Formation
         fields = ('titre', 'domaine', 'duree')
+        
+        depth = 2
