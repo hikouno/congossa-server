@@ -9,7 +9,7 @@ from django.core import serializers
 
 from django.shortcuts import get_object_or_404, get_list_or_404
 
-from .models import Offre, Demande, Experience, Metier
+from .models import Offre, Demande, Experience, Metier, Qualite, Competence
 from .serializers import DemandeSerializer, OffreSerializer
 
 
@@ -35,6 +35,8 @@ def ajoutDemande(request):
 
     if request.user.is_authenticated:
 
+        print(body)
+
         metier1, metier_bool = Metier.objects.get_or_create(intitule=body['categorie'])
         demande=Demande.objects.create(categorie=metier1,
             typeContrat=body['typeOfJob'],
@@ -51,18 +53,14 @@ def ajoutDemande(request):
                 domaine=metier,
                 duree=body['experiences'][i]['period'])
             demande.experiencePossede.add(exp)
-        #Formations
-        #for i in range(len(body['formations'])):
-            #form = Formation.objects.create(#TODO)
-            #demande.formations.add(form)
         #Qualities
-        #for i in range(len(body['tableQualities'])):
-            #qual = Qualite.objects.create(#TODO)
-            #demande.qualitePossede.add(qual)
+        for i in range(len(body['tableQualities'])):
+            qual, qual_bool = Qualite.objects.get_or_create(contenu=body['tableQualities'][i])
+            demande.qualitePossede.add(qual)
         #Competences
-        #for i in range(len(body['tableSkills'])):
-            #comp = Competence.objects.create(#TODO)
-            #demande.competencePossede.add(comp)
+        for i in range(len(body['tableSkills'])):
+            comp, comp_bool = Competence.objects.get_or_create(contenu=body['tableSkills'][i])
+            demande.competencePossede.add(comp)
         #User
         demande.demandeur = request.user
 
@@ -80,23 +78,23 @@ def voirAnnonce(request, nom):
 
 
 def getDemandes(request):
-    
+
     if request.user.is_authenticated:
-        
+
         demandes = get_list_or_404(Demande, demandeur = request.user)
         demandes_json = DemandeSerializer(demandes, many=True)
-        
+
         return JsonResponse(demandes_json.data, safe=False)
     else :
         return JsonResponse({'success': False})
 
 def getOffres(request):
-    
+
     if request.user.is_authenticated:
-        
+
         offres = get_list_or_404(Offre, recruteur = request.user)
         offres_json = OffreSerializer(offres, many=True)
-        
+
         return JsonResponse(offres_json.data, safe=False)
     else :
         return JsonResponse({'success': False})
