@@ -13,7 +13,6 @@ from composantProfil.views import CreateQualite
 from composantProfil.views import CreateCompetence
 from composantProfil.views import CreateExperience
 from composantProfil.views import CreateFormation
-#from composantProfil.views import EditQualite
 from django.http import JsonResponse
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
@@ -50,7 +49,6 @@ def login_user(request):
     nomDeCompte = body['login']
     motDePasse = body['password']
     user = authenticate(username=nomDeCompte, password=motDePasse)
-
     if user is not None:
         login(request, user)
         qualite=""
@@ -63,11 +61,10 @@ def login_user(request):
         competence=competence[:-1]
         formation=[]
         for form in user.formation.all():
-        	formation=formation+[form.titre,form.domaine,form.duree]
+        	formation=formation+[form.titre,form.domaine.intitule,form.duree]
         experience=[]
         for exp in user.experience.all():
         	experience=experience+[exp.titre,exp.domaine.intitule,exp.duree]
-        print(experience)
         donneeUtilisateur={
         'prenom': user.first_name,
         'nom': user.last_name,
@@ -255,10 +252,20 @@ def changeExperienceFormation(request):
 
 ##
 #  S'enregistrer
+@csrf_exempt
 def register(request):
-	utilisateur.set_password(motDePasse)
-	utilisateur.save()
-	return HttpResponse("Profil de %s cree" % nomDeCompte)
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	login=body['login']
+	password=body['password']
+	utilisateur,utilisateurCree=Utilisateur.objects.get_or_create(username=login,password=password)
+	if (utilisateurCree):
+		#Nouvel email
+		user = authenticate(username=login, password=password)
+		return JsonResponse({'success' : True})
+	else:
+		return JsonResponse({'success' : False})
+
 
 ##
 #  Fonction pour consulter un profil
