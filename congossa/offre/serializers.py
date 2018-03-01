@@ -44,16 +44,16 @@ class DemandeSerializer(serializers.ModelSerializer):
 class OffreSerializer(serializers.ModelSerializer):
 
     categorie = MetierSerializer()
-    competenceRequises = CompetenceSerializer(many=True)
-    qualiteRequises = QualiteSerializer(many=True)
-    experienceRequises = ExperienceSerializer(many=True)
+    competencesRequises = CompetenceSerializer(many=True)
+    qualitesRequises = QualiteSerializer(many=True)
+    experiencesRequises = ExperienceSerializer(many=True)
     recruteur = UtilisateurFormationSerializer()
 
     class Meta:
           model = Offre
 
           fields = (
-                'titre', 'categorie', 'typeContrat', 'dateDebut', 'dateFin', 'city', 'description', 'competenceRequises', 'qualiteRequises',
-                'experienceRequises', 'recruteur')
+                'titre', 'categorie', 'typeContrat', 'dateDebut', 'dateFin', 'city', 'description', 'competencesRequises', 'qualitesRequises',
+                'experiencesRequises', 'recruteur')
                 
           depth = 2
