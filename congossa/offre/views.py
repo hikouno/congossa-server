@@ -25,6 +25,8 @@ def ajoutOffre(request):
 
         print(body)
 
+
+
         metier1, metier_bool = Metier.objects.get_or_create(intitule=body['categorie'])
         offre=Offre.objects.create(titre=body['title'],
             categorie=metier1,
@@ -54,6 +56,9 @@ def ajoutOffre(request):
         offre.demandeur = request.user
 
         offre.save()
+
+        print('offre créée :')
+        print(offre.qualitesRequises.all())
 
         return JsonResponse({'success': "OK"})
     else :

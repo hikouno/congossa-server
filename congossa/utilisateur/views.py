@@ -66,6 +66,7 @@ def login_user(request):
         for exp in user.experience.all():
         	experience=experience+[exp.titre,exp.domaine.intitule,exp.duree]
         donneeUtilisateur={
+		'user_id': user.id,
         'prenom': user.first_name,
         'nom': user.last_name,
         'sexe': user.sexe,
@@ -78,6 +79,7 @@ def login_user(request):
         'competence': competence,
         'qualite': qualite
         }
+
         return JsonResponse({'success' : True, 'userData': donneeUtilisateur})
     else:
         logout(request)
