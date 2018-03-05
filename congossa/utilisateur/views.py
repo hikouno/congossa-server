@@ -262,6 +262,8 @@ def register(request):
 	if (utilisateurCree):
 		#Nouvel email
 		user = authenticate(username=login, password=password)
+		utilisateur.set_password(password)
+		utilisateur.save()
 		return JsonResponse({'success' : True})
 	else:
 		return JsonResponse({'success' : False})
