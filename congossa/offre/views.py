@@ -18,16 +18,47 @@ from .serializers import DemandeSerializer, OffreSerializer
 
 @csrf_exempt
 def ajoutOffre(request):
-    if request.user.is_authenticated:
-        # Do something for authenticated users.
-        return JsonResponse({'test': "oui", 'username' : request.user.username, 'pass' : request.user.password})
-    else:
-        # Do something for anonymous users.
-        return JsonResponse({'test': "non"})
-    data =  {'test': request.body.decode('utf-8')} # création du ficier Json
-    #o = Offre(metier=request.POST.)
-    return JsonResponse(data)
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
 
+    if request.user.is_authenticated:
+
+        print(body)
+
+        metier1, metier_bool = Metier.objects.get_or_create(intitule=body['categorie'])
+        offre=Offre.objects.create(titre=body['title'],
+            categorie=metier1,
+            typeContrat=body['typeOfJob'],
+            dateDebut=body['dateDebut'],
+            dateFin=body['dateFin'],
+            city=body['city'],
+            description=body['description'])
+        #Experiences
+        for i in range(len(body['experiences'])):
+            metier, bool =Metier.objects.get_or_create(
+                intitule=body['experiences'][i]['domaine'])
+            exp = Experience.objects.create(
+                titre=body['experiences'][i]['experience'],
+                domaine=metier,
+                duree=body['experiences'][i]['period'])
+            offre.experiencesRequises.add(exp)
+        #Qualities
+        for i in range(len(body['tableQualities'])):
+            qual, qual_bool = Qualite.objects.get_or_create(contenu=body['tableQualities'][i])
+            offre.qualitesRequises.add(qual)
+        #Competences
+        for i in range(len(body['tableSkills'])):
+            comp, comp_bool = Competence.objects.get_or_create(contenu=body['tableSkills'][i])
+            offre.competencesRequises.add(comp)
+        #User
+        offre.demandeur = request.user
+
+        offre.save()
+
+        return JsonResponse({'success': "OK"})
+    else :
+
+        return JsonResponse({'success': "KO"})
 @csrf_exempt
 def ajoutDemande(request):
     body_unicode = request.body.decode('utf-8')

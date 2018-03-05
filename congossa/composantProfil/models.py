@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+
 #############################
 #useless
 class Competence(models.Model):
