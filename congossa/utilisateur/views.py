@@ -66,7 +66,7 @@ def login_user(request):
         for exp in user.experience.all():
         	experience=experience+[exp.titre,exp.domaine.intitule,exp.duree]
         donneeUtilisateur={
-		'user_id': user.id,
+		'id_user': user.id,
         'prenom': user.first_name,
         'nom': user.last_name,
         'sexe': user.sexe,
