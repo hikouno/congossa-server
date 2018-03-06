@@ -8,7 +8,6 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Utilisateur
 from .models import Competence
 from .models import Qualite
-from .forms import UploadFileForm
 from .models import Formation
 from composantProfil.views import CreateQualite
 from composantProfil.views import CreateCompetence
