@@ -35,6 +35,7 @@ class Offre(models.Model):
 			,experiencesRequises=experiencesRequises\
 			,competencesRequises=competencesRequises\
 			,qualitesRequises=qualitesRequises\
+			
 			,recruteur=recruteur)
 		return offre
 ###############################
