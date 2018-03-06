@@ -53,7 +53,7 @@ def ajoutOffre(request):
             comp, comp_bool = Competence.objects.get_or_create(contenu=body['tableSkills'][i])
             offre.competencesRequises.add(comp)
         #User
-        offre.demandeur = request.user
+        offre.recruteur = request.user
 
         offre.save()
 
@@ -130,6 +130,7 @@ def getOffres(request):
 
         offres = get_list_or_404(Offre, recruteur = request.user)
         offres_json = OffreSerializer(offres, many=True)
+
 
         return JsonResponse(offres_json.data, safe=False)
     else :
