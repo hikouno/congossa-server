@@ -8,12 +8,14 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Utilisateur
 from .models import Competence
 from .models import Qualite
+from .forms import UploadFileForm
 from .models import Formation
 from composantProfil.views import CreateQualite
 from composantProfil.views import CreateCompetence
 from composantProfil.views import CreateExperience
 from composantProfil.views import CreateFormation
 from django.http import JsonResponse
+
 
 #Les fonctions a appeler les parametres sont recuperer dans urls.py (nom dans mon cas)
 
@@ -76,7 +78,8 @@ def login_user(request):
         'formation': formation,
         'experience': experience,
         'competence': competence,
-        'qualite': qualite
+        'qualite': qualite,
+       	'avatar':user.avatar
         }
         return JsonResponse({'success' : True, 'userData': donneeUtilisateur})
     else:
@@ -245,7 +248,6 @@ def changeExperienceFormation(request):
 		user.formation.clear()
 		for form in formations:
 			user.formation.add(CreateFormation(form['formation'],form['period'],form['domaine']))
-		print(user.formation.all())
 		return JsonResponse({'success' : True})
 	else:
 		return JsonResponse({'success' : False})
@@ -267,7 +269,18 @@ def register(request):
 		return JsonResponse({'success' : True})
 	else:
 		return JsonResponse({'success' : False})
-
+@csrf_exempt
+def changeAvatar(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	newAvatar=body['newAvatar']
+	if request.user.is_authenticated:
+		user=request.user
+		user.avatar=newAvatar
+		user.save()
+		return JsonResponse({'success' : True})
+	else:
+		return JsonResponse({'success' : False})
 
 ##
 #  Fonction pour consulter un profil

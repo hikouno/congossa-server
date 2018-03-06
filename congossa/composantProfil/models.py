@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+
 #############################
 #useless
 class Competence(models.Model):
@@ -28,7 +29,7 @@ class Qualite(models.Model):
 	#useless ou nb année
 #############################
 class Experience(models.Model):
-	titre=models.CharField(max_length=200);
+	titre=models.CharField(max_length=200)
 	domaine= models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
 	duree=models.CharField(max_length=200, blank=True)
 	#id genere automatiquement
@@ -41,7 +42,7 @@ class Experience(models.Model):
 		return experience
 #############################
 class Formation(models.Model):
-	titre=models.CharField(max_length=200);
+	titre=models.CharField(max_length=200)
 	domaine= models.ForeignKey(Metier, on_delete=models.CASCADE, null=True)
 	duree=models.CharField(max_length=200, blank=True)
 	#id genere automatiquement
