@@ -2,8 +2,8 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import AbstractUser
-from composantProfil.models import Formation
 from composantProfil.models import Experience
+from composantProfil.models import Formation
 from composantProfil.models import Qualite
 from composantProfil.models import Competence
 
@@ -12,7 +12,7 @@ class Utilisateur(AbstractUser):
 	dateDeNaissance = models.CharField(max_length=200,default='null')
 	localisation = models.CharField(max_length=200,default='null')
 	# A voir pour le delete et le default
-	avatar = models.CharField(max_length=200,default='null')
+	avatar = models.CharField(max_length=2000,default='null')
 	competence = models.ManyToManyField(Competence)
 	qualite = models.ManyToManyField(Qualite)
 	formation=models.ManyToManyField(Formation)
@@ -35,19 +35,3 @@ class Utilisateur(AbstractUser):
 	# permissions = ?
 	# Group = ? (Vide par default)
 	#########################################################
-
-	# Un constructeur
-	@classmethod
-	def create (cls, username, password, nom, prenom, email, dateDeNaissance, localisation, avatar, description):
-		utilisateur=cls(username=username\
-			,password=password\
-			,date_joined=datetime.datetime.now()\
-			,last_name=nom\
-			,first_name=prenom\
-			,email=email\
-			,last_login=datetime.datetime.now()\
-			,dateDeNaissance=dateDeNaissance\
-			,localisation=localisation\
-			,avatar=avatar\
-			,description=description)
-		return utilisateur

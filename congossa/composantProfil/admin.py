@@ -8,6 +8,7 @@ from .models import Formation
 from .models import Metier
 
 
+
 admin.site.register(Competence)
 admin.site.register(Qualite)
 admin.site.register(Experience)
