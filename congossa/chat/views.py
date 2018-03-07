@@ -17,6 +17,7 @@ from offre.models import Offre, Demande
 def getDialogFromIds(id_offre, id_demande):
     owner = Offre.objects.get(id=id_offre)
     opponent = Demande.objects.get(id=id_demande)
+
     dialog = Dialog.objects.get(owner=owner, opponent=opponent)
 
     return dialog
@@ -42,26 +43,26 @@ def addMessage(request):
 
 ## Returns all messages of a dialog as a Json file
 #
-@csrf_exempt
+#@csrf_exempt
 def getDialog(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
     id_offre = body['id_offre']
     id_demande = body['id_demande']
 
-    dialog = getDialogFromIds(id_offre,id_demande)
-    messages = dialog.message_set.all().order_by('timestamp') # getting messages corresponding to the dialog and ordering them
+    #dialog = getDialogFromIds(id_offre,id_demande)
+    #messages = dialog.message_set.all().order_by('timestamp') # getting messages corresponding to the dialog and ordering them
 
-    messages_text = []# the text of the message_set
-    messages_sender = [] # the person who sent the message
+    #messages_text = []# the text of the message_set
+    #messages_sender = [] # the person who sent the message
 
-    for message in messages:
-        messages_text += message.text
-        messages_sender += message.sender.username
+    #for message in messages:
+    #    messages_text += message.text
+    #    messages_sender += message.sender.username
 
-    data =  { 'messages_text' : messages_text, 'messages_sender' : messages_sender}
+    #data =  { 'messages_text' : messages_text, 'messages_sender' : messages_sender}
 
-    return JsonResponse(data)
+    #return JsonResponse(data)
 
 ## Returns last message given id_demande and id_offre
 #
@@ -122,18 +123,21 @@ def alldialoguser(idd, is_offre):
     dialogs_info = []
 
     if (is_offre):
-        dialogs = Dialog.objects.filter(owner=idd) # request by 'owner'
+        offre = Offre.objects.get(id=idd)
+        dialogs = Dialog.objects.filter(owner=offre) # request by 'owner'
         for dialog in dialogs:
             id_demande = dialog.opponent.id
             opponent = dialog.opponent.demandeur.username
             last_message = getlastmessage(id_demande, idd)
             dialogs_info += [[idd, id_demande, opponent, last_message]]
+
     else:
-        dialogs = Dialog.objects.filter(opponent=idd) # request by 'opponent'
+        demande = Demande.objects.get(id=idd)
+        dialogs = Dialog.objects.filter(opponent=demande) # request by 'opponent'
         for dialog in dialogs:
             id_offre = dialog.owner.id
             owner = dialog.owner.recruteur.username
-            last_message = getlastmessage(id_offre, idd)
+            last_message = getlastmessage(idd, id_offre)
             dialogs_info += [[id_offre, idd, owner, last_message]]
 
     return dialogs_info
