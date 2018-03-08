@@ -57,10 +57,15 @@ def ajoutOffre(request):
 
         offre.save()
 
-        print('offre créée :')
-        print(offre.qualitesRequises.all())
+        #Retrieve matching Demands and return them
+        metier2, bool =Metier.objects.get_or_create(
+            intitule=body['categorie'])
+        d = Demande.objects.filter(categorie = metier2,
+            city = body['city'])
+        list_resultDemande = list(d)
+        mesMatchDemandes_json = DemandeSerializer(list_resultDemande, many=True)
 
-        return JsonResponse({'success': "OK"})
+        return JsonResponse({'success': "OK", 'matchingDemandes': mesMatchDemandes_json.data}, safe=False)
     else :
 
         return JsonResponse({'success': "KO"})
@@ -100,9 +105,18 @@ def ajoutDemande(request):
         #User
         demande.demandeur = request.user
 
+        #Save the demande with all its fields
         demande.save()
 
-        return JsonResponse({'success': "OK"})
+        #Retrieve matching Offers and return them
+        metier2, bool =Metier.objects.get_or_create(
+            intitule=body['categorie'])
+        o = Offre.objects.filter(categorie = metier2,
+            city = body['city'])
+        list_resultOffre = list(o)
+        mesMatchOffres_json = OffreSerializer(list_resultOffre, many=True)
+
+        return JsonResponse({'success': "OK", 'matchingOffres': mesMatchOffres_json.data}, safe=False)
     else :
         return JsonResponse({'success': "KO"})
 
@@ -133,6 +147,42 @@ def getOffres(request):
 
 
         return JsonResponse(offres_json.data, safe=False)
+    else :
+        return JsonResponse({'success': False})
+
+def getMatches(request):
+
+    if request.user.is_authenticated:
+
+        mesOffres = Offre.objects.filter(recruteur = request.user)
+        mesOffres = list(mesOffres)
+        mesMatchDemandes = []
+        for offre in mesOffres :
+            d = Demande.objects.filter(categorie = offre.categorie,
+                city = offre.city)
+            list_resultDemande = list(d)
+            mesMatchDemandes += list_resultDemande
+        mesMatchDemandes_json = DemandeSerializer(mesMatchDemandes, many=True)
+
+        print('mesMatchDemandes = ')
+        print(mesMatchDemandes)
+
+        mesDemandes = Demande.objects.filter(demandeur = request.user)
+        mesDemandes = list(mesDemandes)
+        mesMatchOffres = []
+        for demande in mesDemandes :
+            o = Offre.objects.filter(categorie = demande.categorie,
+                city = demande.city)
+            list_resultOffre = list(o)
+            mesMatchOffres += list_resultOffre
+        mesMatchOffres_json = OffreSerializer(mesMatchOffres, many=True)
+
+        print('mesMatchOffres = ')
+        print(mesMatchOffres)
+
+
+        return JsonResponse({'offres': mesMatchOffres_json.data,
+                            'demandes': mesMatchDemandes_json.data}, safe = False)
     else :
         return JsonResponse({'success': False})
 

@@ -6,12 +6,13 @@ from composantProfil.serializers import ExperienceSerializer
 from composantProfil.serializers import FormationSerializer
 
 from utilisateur.serializers import UtilisateurFormationSerializer
+from utilisateur.serializers import UtilisateurBasiqueSerializer
 
 from .models import Demande, Offre
 
 
 '''class DemandeSerializer(serializers.Serializer):
-    
+
     categorie = MetierSerializer()
 	typeContrat = serializers.CharField(max_length=200)
 	dateDebut = serializers.DateTimeField()
@@ -30,7 +31,7 @@ class DemandeSerializer(serializers.ModelSerializer):
     competencePossede = CompetenceSerializer(many=True)
     qualitePossede = QualiteSerializer(many=True)
     experiencePossede = ExperienceSerializer(many=True)
-    demandeur = UtilisateurFormationSerializer()
+    demandeur = UtilisateurBasiqueSerializer()
 
     class Meta:
           model = Demande
@@ -38,7 +39,7 @@ class DemandeSerializer(serializers.ModelSerializer):
           fields = (
                 'categorie', 'typeContrat', 'dateDebut', 'dateFin', 'city', 'description', 'competencePossede', 'qualitePossede',
                 'experiencePossede', 'demandeur')
-                
+
           depth = 2
 
 class OffreSerializer(serializers.ModelSerializer):
@@ -55,5 +56,5 @@ class OffreSerializer(serializers.ModelSerializer):
           fields = (
                 'titre', 'categorie', 'typeContrat', 'dateDebut', 'dateFin', 'city', 'description', 'competencesRequises', 'qualitesRequises',
                 'experiencesRequises', 'recruteur')
-                
+
           depth = 2

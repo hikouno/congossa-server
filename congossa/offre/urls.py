@@ -13,6 +13,7 @@ urlpatterns = [
     path('ajoutDemande/', views.ajoutDemande, name='ajoutDemande'),
     path('voirAnnonce/', views.voirAnnonce, name='voirAnnonce'),
     path('demandes/', views.getDemandes, name='getDemandes'),
-    path('offres/', views.getOffres, name="getOffres")
+    path('offres/', views.getOffres, name="getOffres"),
+    path('matches/', views.getMatches, name="getMatches")
 
 ]
