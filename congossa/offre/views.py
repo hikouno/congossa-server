@@ -61,7 +61,7 @@ def ajoutOffre(request):
         metier2, bool =Metier.objects.get_or_create(
             intitule=body['categorie'])
         d = Demande.objects.filter(categorie = metier2,
-            city = body['city'])
+            city = body['city']).exclude(demandeur = request.user)
         list_resultDemande = list(d)
         mesMatchDemandes_json = DemandeSerializer(list_resultDemande, many=True)
 
@@ -112,7 +112,7 @@ def ajoutDemande(request):
         metier2, bool =Metier.objects.get_or_create(
             intitule=body['categorie'])
         o = Offre.objects.filter(categorie = metier2,
-            city = body['city'])
+            city = body['city']).exclude(recruteur = request.user)
         list_resultOffre = list(o)
         mesMatchOffres_json = OffreSerializer(list_resultOffre, many=True)
 
@@ -159,7 +159,7 @@ def getMatches(request):
         mesMatchDemandes = []
         for offre in mesOffres :
             d = Demande.objects.filter(categorie = offre.categorie,
-                city = offre.city)
+                city = offre.city).exclude(demandeur = request.user)
             list_resultDemande = list(d)
             mesMatchDemandes += list_resultDemande
         mesMatchDemandes_json = DemandeSerializer(mesMatchDemandes, many=True)
@@ -172,7 +172,7 @@ def getMatches(request):
         mesMatchOffres = []
         for demande in mesDemandes :
             o = Offre.objects.filter(categorie = demande.categorie,
-                city = demande.city)
+                city = demande.city).exclude(recruteur = request.user)
             list_resultOffre = list(o)
             mesMatchOffres += list_resultOffre
         mesMatchOffres_json = OffreSerializer(mesMatchOffres, many=True)
